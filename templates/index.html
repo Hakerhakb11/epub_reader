@@ -1,11 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
-</head>
-<body>
-    <h1>Index page</h1>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}
+Index
+{% endblock title %}
+
+{% block style %}
+body {
+    background-color: black;
+    color: white;
+    text-align: center;
+    font-size: 30px;
+}
+.output {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-top: 20px;
+    word-wrap: break-word;
+}
+{% endblock style %}
+
+{% block body %}
+<h1>Index page</h1>
+
+
+<form method="POST">
+    <input type="content" name="text" placeholder="Input your text:" style="width: 250px; height: 40px">
+        {{ text_from_server }}
+    </text>
+    <button style="block-size: 40px; inline-size: 50px; ">Enter</button>
+</form>
+
+<form action="" method="POST">
+    <input type="content" name="M" placeholder="Input your text:" style="width: 250px; height: 40px">
+    <button style="block-size: 46px; inline-size: 50px; ">Enter</button>
+</form>
+
+
+{% if text %}
+
+<div class="output">
+    {{ text | safe }}
+</div>
+
+{% endif %}
+
+{% endblock body %}
+

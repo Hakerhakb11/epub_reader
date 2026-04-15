@@ -12,7 +12,6 @@ body {
     font-size: 30px;
 }
 .output {
-    border: 1px solid #ccc;
     padding: 20px;
     margin-top: 20px;
     word-wrap: break-word;
@@ -20,29 +19,21 @@ body {
 {% endblock style %}
 
 {% block body %}
-<h1>Index page</h1>
+<h2>Print text now</h2>
 
 
 <form method="POST">
-    <input type="content" name="text" placeholder="Input your text:" style="width: 250px; height: 40px">
-        {{ text_from_server }}
-    </text>
-    <button style="block-size: 40px; inline-size: 50px; ">Enter</button>
+    <input type="text" name="content" placeholder="Input your text" style="width: 250px; height: 40px">
+    <button type="submit" style="block-size: 45px; inline-size: 50px; ">Enter</button>
 </form>
 
-<form action="" method="POST">
-    <input type="content" name="M" placeholder="Input your text:" style="width: 250px; height: 40px">
-    <button style="block-size: 46px; inline-size: 50px; ">Enter</button>
-</form>
+{% if user_text %}
 
-
-{% if text %}
-
+<p>Количество слов: {{ words_count }}</p>
 <div class="output">
-    {{ text | safe }}
+    {{ user_text | safe }}
 </div>
 
 {% endif %}
 
 {% endblock body %}
-

@@ -4,19 +4,93 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Index</title>
-        
         <title>
             {% block title %}{% endblock title %}
         </title>
-        
         <style>
+            body {
+                margin: 0;
+                background-color: black;
+                color: white;
+                font-size: 30px;
+            }
+            .container {
+                display: flex;
+                flex-direction: row;
+                height: 100vh;
+            }
+            aside {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+                width: 170px;
+                flex-shrink: 0;
+                padding: 5px;
+                border-right: 1px solid white;
+                
+            }
+            aside a {
+                text-decoration: none;
+                width: 100%;
+                box-sizing: border-box;
+                text-align: center;
+                white-space: nowrap;
+                overflow: hidden;  
+                text-overflow: ellipsis;          
+                color: white;
+                border: 2px solid white;
+                padding: 10px;
+                display: inline-block;
+                transition: 0.2s;
+            }
+            aside a:hover {
+                background-color: white;
+                color: black;
+            }
+            main {
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                overflow-y: auto;
+            }
+            summary {
+                list-style: none;
+                cursor: pointer;
+                user-select: none;
+                padding: 10px;
+                border: 1px solid white;
+                text-align: center;
+                
+            }
             {% block style %}{% endblock style %}
         </style>
-        
     </head>
-    
     <body>
-        {% block body %}{% endblock body %}
+        <div class="container">
+            <details open>
+                <summary>&#9776; Меню</summary>
+                <aside>
+                    <a href="#">1</a>
+                    <a href="#">1232323</a>
+                    <a href="#">323</a>
+                    <a href="#">13</a>
+                    <a href="#">131212</a>
+                    <a href="#">13</a>
+                    <a href="#">13122</a>
+                    <a href="#">11312223232323232222</a>
+                    <a href="#">13122</a>
+                    <a href="#">11312223232323232222</a>
+                    <a href="#">13122</a>
+                    <a href="#">11312223232323232222</a>
+                    <a href="#">13122</a>
+                    <a href="#">11312223232323232222</a>
+                </aside>
+            </details>
+            <main>
+                {% block body %}{% endblock body %}
+            </main>
+        </div>
     </body>
-
 </html>

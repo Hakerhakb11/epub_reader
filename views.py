@@ -12,7 +12,6 @@ def index():
         user_text = request.form.get('content')
         if user_text:
             soup = BeautifulSoup(user_text, 'lxml') 
-
             if soup.head:
                 soup.head.decompose()
 

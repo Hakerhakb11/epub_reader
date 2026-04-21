@@ -8,16 +8,15 @@ Index
 .output {
     hyphens: auto;
     word-break: break-all;
+    align-text: center;
 }
 {% endblock style %}
 
 {% block body %}
 
-<div>
-
     <details {% if user_text %} open {% endif %}>
         <p><summary>Print text now</summary></p>
-        <form method="POST">
+        <form method="POST" style="display: flex; align-items: center;">
             <textarea id="message" name="content" placeholder="Input your text" rows="4" cols="40"></textarea>
             <button type="submit" style="block-size: 50px; inline-size: 60px;">Enter</button>
         </form>
@@ -31,7 +30,7 @@ Index
             {{ user_text | safe }}
         </p>
     </div>
-</div>
+
 
 {% endif %}
 

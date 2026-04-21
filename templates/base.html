@@ -17,15 +17,20 @@
             .container {
                 display: flex;
                 flex-direction: row;
-                height: 100vh;
+                height: 100vh; 
             }
             aside {
                 width: 210px;
-                border-right: 1px solid white;
+                transition: width 0.3s ease;
                 display: flex;
                 flex-direction: column;
                 flex-shrink: 0;
                 overflow: hidden;
+                
+            }
+            aside:has(details:not([open])) {
+                width: 60px;
+                
             }
             aside a {
                 text-decoration: none;
@@ -62,12 +67,16 @@
                 padding: 10px;
                 border: 1px solid white;
                 text-align: center;
-                
             }
-            aside details{
+            aside details[open] {
+                color: yellow;
                 display: flex;
                 height: 100%;
                 flex-direction: column;
+                
+            }
+            aside details:not([open]) {
+                color: red;
             }
             .aside-links {
                 overflow-y: auto;
@@ -82,34 +91,17 @@
         <div class="container">
             <aside>
                 <details open>
-                    <summary>&#9776; Меню</summary>
+                    <summary>&#9776;</summary>
                     <div class="aside-links">
                         <a href="#">1</a>
-                        <a href="#">1232323</a>
-                        <a href="#">323</a>
-                        <a href="#">13</a>
-                        <a href="#">131212</a>
-                        <a href="#">13</a>
-                        <a href="#">13122</a>
-                        <a href="#">11312223232323232222</a>
-                        <a href="#">13122</a>
-                        <a href="#">11312223232323232222</a>
-                        <a href="#">13122</a>
-                        <a href="#">11312223232323232222</a>
-                        <a href="#">13122</a>
-                        <a href="#">11312223232323232222</a>
-                        <a href="#">13122</a>
-                        <a href="#">11312223232323232222</a>
-                        <a href="#">13122</a>
-                        <a href="#">11312223232323232222</a>
-                        <a href="#">13122</a>
-                        <a href="#">11312223232323232222</a>
-                        <a href="#">13122</a>
-                        <a href="#">11312223232323232222</a>
-                        <a href="#">13122</a>
-                        <a href="#">11312223232323232222</a>
-                        <a href="#">13122</a>
-                        <a href="#">11312223232323232222</a>
+                        <a href="#">1</a>
+                        <a href="#">1</a>
+                        <a href="#">1</a>
+                        <a href="#">1</a>
+                        <a href="#">1</a>
+                        <a href="#">1</a>
+                        <a href="#">1</a>
+                        <a href="#">1</a>
                     </div>
                 </details>
             </aside>

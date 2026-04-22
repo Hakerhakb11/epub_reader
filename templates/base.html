@@ -68,16 +68,19 @@
                 border: 1px solid white;
                 text-align: center;
             }
-            aside details[open] {
+            details[open] {
                 color: yellow;
                 display: flex;
                 height: 100%;
-                flex-direction: column;
-                
+                flex-direction: column;   
             }
-            aside details:not([open]) {
+            summary:hover {
+                background-color: #333333;
+                transition: 0.3s;
+            }
+            /* aside details:not([open]) {
                 color: red;
-            }
+            } */
             .aside-links {
                 overflow-y: auto;
                 display: flex;
@@ -90,7 +93,7 @@
     <body>
         <div class="container">
             <aside>
-                <details open>
+                <details {% if user_text %} close {% endif %}>
                     <summary>&#9776;</summary>
                     <div class="aside-links">
                         <a href="#">1</a>

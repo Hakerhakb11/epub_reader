@@ -14,13 +14,24 @@ Index
 
 {% block body %}
 
-    <details {% if user_text %} open {% endif %}>
-        <p><summary>Print text now</summary></p>
-        <form method="POST" style="display: flex; align-items: center;">
-            <textarea id="message" name="content" placeholder="Input your text" rows="4" cols="40"></textarea>
-            <button type="submit" style="block-size: 50px; inline-size: 60px;">Enter</button>
-        </form>
-    </details>
+    <div style="display: flex; flex-direction: row;">
+
+        <details name="menu" {% if user_text %} open {% endif %}>
+            <summary style="margin-bottom: 40px;" >Print text now</summary>
+            <form method="POST">
+                <textarea id="message" name="content_text" placeholder="Input your text" rows="4" cols="40"></textarea>
+                <button type="submit" style="block-size: 50px; inline-size: 60px;">Enter</button>
+            </form>
+        </details>
+        
+        <details name="menu">
+            <summary style="margin-bottom: 40px;">Input file</summary>
+            <form method="POST" enctype="multipart/form-data">
+                <input type="file" name="content_file" style="height: auto; width: 180px;">
+                <button type="submit" style="block-size: 50px; inline-size: 60px">Enter</button>
+            </form>
+        </details>
+    </div>
     
     {% if user_text %}
     

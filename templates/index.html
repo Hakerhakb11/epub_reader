@@ -41,8 +41,11 @@ Index
             {{ user_text | safe }}
         </p>
     </div>
+    
+    {% endif %}
 
-
-{% endif %}
+    {% if error %}
+    <p> {{ error }} </p>
+    {% endif %}
 
 {% endblock body %}

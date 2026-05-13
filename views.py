@@ -1,8 +1,8 @@
 from app import app
 from flask import render_template, request
 from bs4 import BeautifulSoup
-import ebooklib
 from ebooklib import epub
+from models import db, Book, Chapter
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -32,16 +32,23 @@ def index():
             efile = ''
             try:
                 efile = epub.read_epub(user_file)
-                print(efile.get_metadata('DC', 'title'))
-                print(efile.get_items_of_type(ebooklib.ITEM_DOCUMENT))
-                temp = list(efile.get_items_of_type(ebooklib.ITEM_DOCUMENT))
-                print("SPINE: \n", efile.spine, "\n\n ENDSPINE\n")
-                # for obj in temp:
-                #     print(obj)
-                print(temp)
+                print("TITLE:", efile.title)
+                new_book = Book(title=f'{efile.title}')
+                db.session.add(new_book)
+                spine = efile.spine
+                for index, item_spine in enumerate(spine):
+                    item_id = item_spine[0]
+                    file = efile.get_item_with_id(item_id)
+                    raw_content = file.get_content()
+                    soup = BeautifulSoup(raw_content, 'xml')
 
-                print("EAZY end")
-            except:
+                    chapter = Chapter(title=f'{file.get_name()}', content=str(soup.prettify), order_number=index, book=new_book)
+                    db.session.add(chapter)
+                    
+                    print('Загружается в БД:', file.get_name())
+                db.session.commit()
+                print("\nEAZY end\n")
+            except Exception as e:
                 error = "Error. Incorrect file type"
                 print(error)
 

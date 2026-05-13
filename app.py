@@ -8,4 +8,3 @@ app.config.from_object(Configuration)
 db = SQLAlchemy(app)
 
 import views
-6

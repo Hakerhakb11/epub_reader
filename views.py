@@ -3,11 +3,16 @@ from flask import render_template, request
 from bs4 import BeautifulSoup
 from ebooklib import epub
 from models import db, Book, Chapter
+import logging
+
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    error = None
+    info = ""
     user_text = ""
     count = 0
     if request.method == 'POST':
@@ -32,24 +37,36 @@ def index():
             efile = ''
             try:
                 efile = epub.read_epub(user_file)
+
                 print("TITLE:", efile.title)
-                new_book = Book(title=f'{efile.title}')
-                db.session.add(new_book)
-                spine = efile.spine
-                for index, item_spine in enumerate(spine):
-                    item_id = item_spine[0]
-                    file = efile.get_item_with_id(item_id)
-                    raw_content = file.get_content()
-                    soup = BeautifulSoup(raw_content, 'xml')
+                new_book_temp = Book.query.filter_by(title=efile.title).first()
+                if not new_book_temp:
+                    new_book = Book(title=f'{efile.title}')
+                    db.session.add(new_book)
+                    spine = efile.spine
+                    for index, item_spine in enumerate(spine):
+                        item_id = item_spine[0]
+                        file = efile.get_item_with_id(item_id)
+                        raw_content = file.get_content()
+                        soup = BeautifulSoup(raw_content, 'xml')
 
-                    chapter = Chapter(title=f'{file.get_name()}', content=str(soup.prettify), order_number=index, book=new_book)
-                    db.session.add(chapter)
-                    
-                    print('Загружается в БД:', file.get_name())
-                db.session.commit()
-                print("\nEAZY end\n")
-            except Exception as e:
-                error = "Error. Incorrect file type"
-                print(error)
+                        chapter = Chapter(title=f'{file.get_name()}', content=str(soup.prettify()), order_number=index, book=new_book)
+                        db.session.add(chapter)
+                        
+                    info = f'Успешно загружен файл {efile.title}'
+                    logging.info(info)
+                    db.session.commit()
+                else:
+                    info = "Book already exist"
+                    logging.info(info)
+            except epub.EpubException as e:
+                info = "Incorrect file type"
+                logging.exception(info)
 
-    return render_template('index.html', user_text=user_text, words_count=count, error=error)
+    all_book = Book.query.all()
+    return render_template('index.html', user_text=user_text, words_count=count, info=info, books=all_book)
+
+@app.route('/<book>')
+def book_view():
+    pass
+    return render_template('book.html', text=text, words_count=count, chapter=all_chapter)

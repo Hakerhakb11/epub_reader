@@ -12,6 +12,19 @@ Index
 }
 {% endblock style %}
 
+{% block aside %}
+    <details>
+        <summary>&#9776;</summary>
+        <div class="aside-links">
+            {% for book in books %}
+            <!-- TODO url_for() -->
+                <a href="#">{{ book.title }}</a>
+            {% endfor %}
+            <a href="#">1</a>
+        </div>
+    </details>
+{% endblock aside %}
+
 {% block body %}
 
     <div style="display: flex; flex-direction: row;">
@@ -33,19 +46,17 @@ Index
         </details>
     </div>
     
+    {% if info %}
+    <p> {{ info }} </p>
+    {% endif %}
+
     {% if user_text %}
-    
     <p>Количество слов: {{ words_count }}</p>
     <div class="output">
         <p>
             {{ user_text | safe }}
         </p>
     </div>
-    
-    {% endif %}
-
-    {% if error %}
-    <p> {{ error }} </p>
     {% endif %}
 
 {% endblock body %}

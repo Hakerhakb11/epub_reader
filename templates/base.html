@@ -28,7 +28,8 @@
                 overflow: hidden;
                 
             }
-            aside:has(details:not([open])) {
+            /* > говорит чтобы только главный элемент учитывался */
+            aside:has(> details:not([open])) {
                 width: 60px;
                 
             }
@@ -74,6 +75,10 @@
                 height: 100%;
                 flex-direction: column;   
             }
+            .aside-links details a {
+                margin-left: 10px;
+                width: calc(100% - 10px);
+            }
             summary:hover {
                 background-color: #333333;
                 transition: 0.3s;
@@ -93,20 +98,7 @@
     <body>
         <div class="container">
             <aside>
-                <details {% if user_text %} close {% endif %}>
-                    <summary>&#9776;</summary>
-                    <div class="aside-links">
-                        <a href="#">1</a>
-                        <a href="#">1</a>
-                        <a href="#">1</a>
-                        <a href="#">1</a>
-                        <a href="#">1</a>
-                        <a href="#">1</a>
-                        <a href="#">1</a>
-                        <a href="#">1</a>
-                        <a href="#">1</a>
-                    </div>
-                </details>
+                {% block aside %}{% endblock aside %}
             </aside>
             <main>
                 {% block body %}{% endblock body %}

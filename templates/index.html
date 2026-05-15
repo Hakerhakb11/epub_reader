@@ -8,31 +8,53 @@ Index
 .output {
     hyphens: auto;
     word-break: break-all;
+    align-text: center;
 }
 {% endblock style %}
 
+{% block aside %}
+    {% for book in books %}
+    <!-- TODO url_for() -->
+        <a href=" {{ url_for('book_view', book_id=book.id)}} ">{{ book.title }}</a>
+        
+    {% endfor %}
+    <a href="">1</a>
+    <a href="">2</a>
+    <a href="">3</a>
+{% endblock aside %}
+
 {% block body %}
 
-<div>
+    <div style="display: flex; flex-direction: row;">
 
-    <details {% if user_text %} open {% endif %}>
-        <p><summary>Print text now</summary></p>
-        <form method="POST">
-            <textarea id="message" name="content" placeholder="Input your text" rows="4" cols="40"></textarea>
-            <button type="submit" style="block-size: 50px; inline-size: 60px;">Enter</button>
-        </form>
-    </details>
+        <details name="menu" {% if user_text %} open {% endif %}>
+            <summary style="margin-bottom: 40px;" >Print text now</summary>
+            <form method="POST">
+                <textarea id="message" name="content_text" placeholder="Input your text" rows="4" cols="40"></textarea>
+                <button type="submit" style="block-size: 50px; inline-size: 60px;">Enter</button>
+            </form>
+        </details>
+        
+        <details name="menu">
+            <summary style="margin-bottom: 40px;">Input file</summary>
+            <form method="POST" enctype="multipart/form-data">
+                <input type="file" name="content_file" style="height: auto; width: 180px;">
+                <button type="submit" style="block-size: 50px; inline-size: 60px">Enter</button>
+            </form>
+        </details>
+    </div>
     
+    {% if info %}
+    <p> {{ info }} </p>
+    {% endif %}
+
     {% if user_text %}
-    
     <p>Количество слов: {{ words_count }}</p>
     <div class="output">
         <p>
             {{ user_text | safe }}
         </p>
     </div>
-</div>
-
-{% endif %}
+    {% endif %}
 
 {% endblock body %}

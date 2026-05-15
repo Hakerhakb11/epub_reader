@@ -17,15 +17,21 @@
             .container {
                 display: flex;
                 flex-direction: row;
-                height: 100vh;
+                height: 100vh; 
             }
             aside {
                 width: 210px;
-                border-right: 1px solid white;
+                transition: width 0.3s ease;
                 display: flex;
                 flex-direction: column;
                 flex-shrink: 0;
                 overflow: hidden;
+                
+            }
+            /* > говорит чтобы только главный элемент учитывался */
+            aside:has(> details:not([open])) {
+                width: 60px;
+                
             }
             aside a {
                 text-decoration: none;
@@ -62,13 +68,24 @@
                 padding: 10px;
                 border: 1px solid white;
                 text-align: center;
-                
             }
-            aside details{
+            details[open] {
+                color: yellow;
                 display: flex;
                 height: 100%;
-                flex-direction: column;
+                flex-direction: column;   
             }
+            .aside-links details a {
+                margin-left: 10px;
+                width: calc(100% - 10px);
+            }
+            summary:hover {
+                background-color: #333333;
+                transition: 0.3s;
+            }
+            /* aside details:not([open]) {
+                color: red;
+            } */
             .aside-links {
                 overflow-y: auto;
                 display: flex;
@@ -81,35 +98,10 @@
     <body>
         <div class="container">
             <aside>
-                <details open>
-                    <summary>&#9776; Меню</summary>
+                <details>
+                    <summary>&#9776;</summary>
                     <div class="aside-links">
-                        <a href="#">1</a>
-                        <a href="#">1232323</a>
-                        <a href="#">323</a>
-                        <a href="#">13</a>
-                        <a href="#">131212</a>
-                        <a href="#">13</a>
-                        <a href="#">13122</a>
-                        <a href="#">11312223232323232222</a>
-                        <a href="#">13122</a>
-                        <a href="#">11312223232323232222</a>
-                        <a href="#">13122</a>
-                        <a href="#">11312223232323232222</a>
-                        <a href="#">13122</a>
-                        <a href="#">11312223232323232222</a>
-                        <a href="#">13122</a>
-                        <a href="#">11312223232323232222</a>
-                        <a href="#">13122</a>
-                        <a href="#">11312223232323232222</a>
-                        <a href="#">13122</a>
-                        <a href="#">11312223232323232222</a>
-                        <a href="#">13122</a>
-                        <a href="#">11312223232323232222</a>
-                        <a href="#">13122</a>
-                        <a href="#">11312223232323232222</a>
-                        <a href="#">13122</a>
-                        <a href="#">11312223232323232222</a>
+                        {% block aside %}{% endblock aside %}
                     </div>
                 </details>
             </aside>

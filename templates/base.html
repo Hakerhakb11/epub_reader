@@ -98,7 +98,12 @@
     <body>
         <div class="container">
             <aside>
-                {% block aside %}{% endblock aside %}
+                <details>
+                    <summary>&#9776;</summary>
+                    <div class="aside-links">
+                        {% block aside %}{% endblock aside %}
+                    </div>
+                </details>
             </aside>
             <main>
                 {% block body %}{% endblock body %}

@@ -4,4 +4,24 @@
 
 {% block style %}{% endblock style %}
 
-{% block body %}{% endblock body %}
+{% block aside %} 
+    {% for chapter in book.chapters.order_by('order_number') %}
+        <a href="{{ url_for('book_view', book_id=book.id, chapter_id=chapter.order_number) }}">{{ chapter.title }}</a>
+
+    {% endfor %}
+{% endblock aside %}
+
+{% block body %}
+
+    <a href="/">Назад</a>
+
+    {% if text %}
+        <p>Количество слов: {{ words_count }}</p>
+        <div class="output">
+            <p>
+                {{ text | safe }}
+            </p>
+        </div>
+    {% endif %}
+
+{% endblock body %}

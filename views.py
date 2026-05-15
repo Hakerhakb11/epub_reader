@@ -52,8 +52,12 @@ def add_epub_file(user_file):
             logging.info(info)
             return info
     except epub.EpubException:
-        info = "Incorrect file type"
-        logging.exception(info)
+        info = "Incorrect file type need '.epub'"
+        logging.error(info)
+        return info
+    except KeyError:
+        info = "Incorrect file type need '.epub'"
+        logging.error(info)
         return info
 
 
@@ -83,12 +87,12 @@ def book_view(book_id, chapter_id=0):
     if not book:
         return "Book is not found", 404
     
-    chapter = book.chapters.filter_by(order_number=chapter_id)
+    chapter = book.chapters.filter_by(order_number=chapter_id).first()
 
     if not chapter:
         return "Chapter is not found", 404
     
-    text = chapter.first().content
+    text = chapter.content
     count = words_count(text)
 
     return render_template('book.html', text=text, words_count=count, book=book)

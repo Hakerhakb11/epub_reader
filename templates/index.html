@@ -7,20 +7,20 @@ Index
 {% block style %}
 .output {
     hyphens: auto;
-    word-break: break-all;
     align-text: center;
 }
 {% endblock style %}
 
 {% block aside %}
-    {% for book in books %}
-    <!-- TODO url_for() -->
+    <div class="aside-links">
+        {% for book in books %}
         <a href=" {{ url_for('book_view', book_id=book.id)}} ">{{ book.title }}</a>
         
-    {% endfor %}
-    <a href="">1</a>
-    <a href="">2</a>
-    <a href="">3</a>
+        {% endfor %}
+        <a href="">1</a>
+        <a href="">2</a>
+        <a href="">3</a>
+    </div>
 {% endblock aside %}
 
 {% block body %}

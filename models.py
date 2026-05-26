@@ -17,3 +17,11 @@ class Chapter(db.Model):
     order_number = db.Column(db.Integer)
 
     book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
+
+
+class Bookmark(db.Model):
+    __tablename__ = 'bookmark'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255))
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
+    chapter_id = db.Column(db.Integer, db.ForeignKey('chapters.id'), nullable=False)

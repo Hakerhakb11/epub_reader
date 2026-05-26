@@ -43,7 +43,7 @@ aside a:hover {
     color: black;
 }
 main {
-    padding: 0px 100px 0px 100px;
+    padding: 0px 250px 0px 250px;
     overflow-y: auto;
     display: flex;
     flex-grow: 1;
@@ -77,8 +77,14 @@ summary:hover {
     color: red;
 } */
 .aside-links {
-    overflow-y: auto;
     display: flex;
     flex-direction: column;
-    max-height: calc(100vh - 80px);
+    height: calc(100vh - 80px);
+}
+.reset-button {
+    background: none;
+    border: none;
+    font: inherit;
+    cursor: pointer;
+    outline: none;
 }

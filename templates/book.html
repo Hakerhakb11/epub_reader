@@ -2,18 +2,58 @@
 
 {% block title %} Book {% endblock title %}
 
-{% block style %}{% endblock style %}
+{% block style %}
+    .button-group {
+        display: flex;
+        flex-direction: row;
+    }
+    .button {
+        list-style: none;
+        cursor: pointer;
+        user-select: none;
+        height: 40px;
+        padding: 10px;
+        border: 1px solid white;
+        text-align: center;
+    }
+    .chapters {
+        overflow-y: auto;
+        flex: 2;
+        border-bottom: 4px solid red
+    }
+    .bookmarks {
+        border-top: 4px solid red;
+        overflow-y: auto;
+        flex: 1;
+    }
+{% endblock style %}
 
-{% block aside %} 
-    {% for chapter in book.chapters.order_by('order_number') %}
-        <a href="{{ url_for('book_view', book_id=book.id, chapter_id=chapter.order_number) }}">{{ chapter.title }}</a>
+{% block aside %}
 
-    {% endfor %}
+    <div class="chapters">
+        {% for chapter in book.chapters.order_by('order_number') %}
+            <a href="{{ url_for('book_view', book_id=book.id, chapter_id=chapter.order_number) }}">{{ chapter.title }}</a>
+        {% endfor %}
+    </div>
+
+    <div>.!..!..!..!..!..!..!..!.</div>
+    
+    <div class="bookmarks">
+        {% for bookmark in bookmarks %}
+            <a href="{{ url_for('book_view', book_id=bookmark.book_id, chapter_id=bookmark.chapter_id) }}">{{ bookmark.title }}</a>
+        {% endfor %}
+    </div>
+
 {% endblock aside %}
 
 {% block body %}
 
-    <a href="/">Назад</a>
+    <div class="button-group">
+        <a href="/" class="button">Назад</a>
+        <form method="POST" class="button" action="{{ url_for('set_bookmark', book_id=book.id, chapter_id=chapter.order_number) }}">
+            <button type="submit" style="block-size: 50px; inline-size: 60px">EnterSet</button>
+        </form>
+    </div>
 
     {% if text %}
         <p>Количество слов: {{ words_count }}</p>

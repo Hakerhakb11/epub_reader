@@ -1,8 +1,8 @@
 from app import app
-from flask import render_template, request
+from flask import render_template, request, redirect, url_for
 from bs4 import BeautifulSoup
 from ebooklib import epub
-from models import db, Book, Chapter
+from models import db, Book, Chapter, Bookmark
 import logging
 
 
@@ -28,8 +28,8 @@ def add_epub_file(user_file):
     try:
         efile = epub.read_epub(user_file)
 
-        new_book_temp = Book.query.filter_by(title=efile.title).first()
-        if not new_book_temp:
+        new_book = Book.query.filter_by(title=efile.title).first()
+        if not new_book:
             new_book = Book(title=f'{efile.title}')
             db.session.add(new_book)
             spine = efile.spine
@@ -43,7 +43,7 @@ def add_epub_file(user_file):
                     soup.prettify()), order_number=index, book=new_book)
                 db.session.add(chapter)
 
-            info = f'Успешно загружен файл {efile.title}'
+            info = f'Succesfully imported file: {efile.title}'
             logging.info(info)
             db.session.commit()
             return info
@@ -92,7 +92,27 @@ def book_view(book_id, chapter_id=0):
     if not chapter:
         return "Chapter is not found", 404
     
+    bookmarks = Bookmark.query.filter_by(book_id=book_id)
+    if bookmarks:
+        bookmarks = bookmarks.all()
+    
     text = chapter.content
     count = words_count(text)
 
-    return render_template('book.html', text=text, words_count=count, book=book)
+    return render_template('book.html', text=text, words_count=count, book=book, chapter=chapter, bookmarks=bookmarks)
+
+
+@app.route('/book/<int:book_id>/<int:chapter_id>', methods=['GET', 'POST'])
+def set_bookmark(book_id, chapter_id):
+
+    new_mark = Bookmark.query.filter_by(book_id=book_id, chapter_id=chapter_id).first()
+    if not new_mark:
+        new_mark = Bookmark(title="Быстрая закладка", book_id=book_id, chapter_id=chapter_id)
+        db.session.add(new_mark)
+        db.session.commit()
+    else:
+        info = "Bookmark already exist"
+        logging.info(info)
+        return info
+    
+    return redirect(url_for('book_view', book_id=book_id, chapter_id=chapter_id))

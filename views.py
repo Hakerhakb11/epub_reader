@@ -40,7 +40,7 @@ def add_epub_file(user_file):
                 soup = BeautifulSoup(raw_content, "xml")
 
                 chapter = Chapter(
-                    title=f"{file.get_name()}",
+                    title=f"{file.get_name()[5:]}",
                     content=str(soup.prettify()),
                     order_number=index,
                     book=new_book,
@@ -97,7 +97,7 @@ def book_view(book_id, chapter_id=0):
     if not chapter:
         return "Chapter is not found", 404
 
-    total_chapters = Chapter.query.filter_by(book_id=book_id).count()
+    total_chapters = book.chapters.count()
 
     bookmarks = Bookmark.query.filter_by(book_id=book_id)
     if bookmarks:
@@ -123,8 +123,11 @@ def set_bookmark(book_id, chapter_id):
     new_mark = Bookmark.query.filter_by(
         book_id=book_id, chapter_id=chapter_id).first()
     if not new_mark:
+        title = db.session.scalar(db.select(Chapter).filter_by(
+            book_id=book_id, order_number=chapter_id)).title
+        print(title, "title")
         new_mark = Bookmark(
-            title="Быстрая закладка", book_id=book_id, chapter_id=chapter_id
+            title=title, book_id=book_id, chapter_id=chapter_id
         )
         db.session.add(new_mark)
         db.session.commit()

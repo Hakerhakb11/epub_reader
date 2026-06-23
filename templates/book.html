@@ -2,126 +2,35 @@
 
 {% block title %} Book {% endblock title %}
 
-{% block style %}
-    @keyframes showPanelOnLoad {
-        0% { transform: translateY(0); }
-        75% { transform: translateY(0); }
-        100% { transform: translateY(-100%); }
-    }
-    
-    .button-group {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 10px;
-        position: sticky;
-        top: 0;
-        background-color: black;
-        width: 100%;
-        padding: 10px 20px;
-        box-sizing: border-box;
-        transition: transform 0.3s ease-in-out;
-        transform: translateY(-100%);
-        animation: showPanelOnLoad 4.5s ease-in-out;
-        z-index: 1000;
-    }
-    
-    .button-group::after {
-        content: "";
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        height: 30px;
-    }
-    
-    .button-group:hover {
-        animation: none;
-        transform: translateY(0);
-    }
-    
-    .button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        box-sizing: border-box;
-        
-        background: none;
-        color: white;
-        font: inherit;
-        outline: none;
-        
-        height: 40px;
-        width: 50px;
-        border: 1px solid white;
-        cursor: pointer;
-        user-select: none;
-        text-decoration: none;
-        transition: background-color 0.2s, color 0.2s, border-color 0.2s;
-    }
-    
-    .button:hover:not(:disabled) {
-        background-color: white;
-        color: black;
-    }
-
-    .button-back {
-        width: 80px;
-        margin-right: auto;
-    }
-
-    .button-mark {
-        width: 110px;
-    }
-    
-    .button:disabled {
-        background-color: #121212;
-        color: #444;
-        border-color: #333;
-        cursor: not-allowed;
-    }
-    
-    .button:disabled svg {
-        opacity: 0.2;
-    }
-
-    .bookmark-form {
-        display: contents;
-    }
-
-    .chapters {
-        overflow-y: auto;
-        flex: 2;
-        border-bottom: 4px solid red;
-    }
-    .bookmarks {
-        border-top: 4px solid red;
-        overflow-y: auto;
-        flex: 1;
-    }
-
-{% endblock style %}
+{% block extra_head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/book.css') }}">
+{% endblock extra_head %}
 
 {% block aside %}
-
     <div class="chapters">
         {% for chapter in book.chapters.order_by('order_number') %}
             <a href="{{ url_for('book_view', book_id=book.id, chapter_id=chapter.order_number) }}">{{ chapter.title }}</a>
         {% endfor %}
     </div>
 
-    <div>.!..!..!..!..!..!..!..!.</div>
+    <div class="sidebar-divider" id="sidebarDivider">
+        <button class="toggle-bookmarks-btn" id="toggleBookmarksBtn" type="button" title="Hide/Show bookmarks">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+            </svg>
+            <span>Bookmarks</span>
+        </button>
+        <div class="drag-handle">•••</div>
+    </div>
 
-    <div class="bookmarks">
+    <div class="bookmarks" id="bookmarksPanel">
         {% for bookmark in bookmarks %}
             <a href="{{ url_for('book_view', book_id=bookmark.book_id, chapter_id=bookmark.chapter_id) }}">{{ bookmark.title }}</a>
         {% endfor %}
     </div>
-
 {% endblock aside %}
 
 {% block body %}
-
     <div class="button-group">
         <a href="/" class="button button-back">Back</a>
 
@@ -165,6 +74,87 @@
                 {{ text | safe }}
             </p>
         </div>
+    ```
     {% endif %}
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const divider = document.getElementById('sidebarDivider');
+            const bookmarksPanel = document.getElementById('bookmarksPanel');
+            const toggleBtn = document.getElementById('toggleBookmarksBtn');
+            
+            let isResizing = false;
+            let savedHeight = 200;
+            let isCollapsed = false;
+
+            toggleBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleBookmarks();
+            });
+
+            divider.addEventListener('dblclick', () => {
+                toggleBookmarks();
+            });
+
+            function toggleBookmarks() {
+                isCollapsed = !isCollapsed;
+                if (isCollapsed) {
+                    if (bookmarksPanel.offsetHeight > 0) {
+                        savedHeight = bookmarksPanel.offsetHeight;
+                    }
+                    bookmarksPanel.classList.add('collapsed');
+                    divider.classList.add('collapsed');
+                } else {
+                    bookmarksPanel.classList.remove('collapsed');
+                    divider.classList.remove('collapsed');
+                    bookmarksPanel.style.height = `${savedHeight}px`;
+                }
+            }
+
+            divider.addEventListener('mousedown', (e) => {
+                if (e.target.closest('#toggleBookmarksBtn')) return;
+                if (isCollapsed) return;
+
+                e.preventDefault();
+
+                isResizing = true;
+                
+                document.body.classList.add('resizing-active');
+                document.body.style.cursor = 'row-resize';
+                
+                bookmarksPanel.style.transition = 'none';
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!isResizing) return;
+
+                e.preventDefault();
+
+                const container = divider.parentElement;
+                if (!container) return;
+
+                const containerRect = container.getBoundingClientRect();
+                
+                const newHeight = containerRect.bottom - e.clientY;
+
+                const maxHeight = containerRect.height * 0.75;
+
+                if (newHeight >= 40 && newHeight <= maxHeight) {
+                    bookmarksPanel.style.height = `${newHeight}px`;
+                    savedHeight = newHeight;
+                }
+            });
+
+            document.addEventListener('mouseup', () => {
+                if (isResizing) {
+                    isResizing = false;
+                    
+                    document.body.classList.remove('resizing-active');
+                    document.body.style.cursor = 'default';
+                    
+                    bookmarksPanel.style.transition = 'height 0.2s ease';
+                }
+            });
+        });
+    </script>
 {% endblock body %}

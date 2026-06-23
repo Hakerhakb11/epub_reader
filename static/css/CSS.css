@@ -4,11 +4,13 @@ body {
     color: white;
     font-size: 30px;
 }
+
 .container {
     display: flex;
     flex-direction: row;
     height: 100vh; 
 }
+
 aside {
     width: 210px;
     transition: width 0.3s ease;
@@ -18,11 +20,13 @@ aside {
     overflow: hidden;
     
 }
+
 /* > говорит чтобы только главный элемент учитывался */
 aside:has(> details:not([open])) {
     width: 60px;
     
 }
+
 aside a {
     text-decoration: none;
     width: 100%;
@@ -38,10 +42,12 @@ aside a {
     transition: 0.2s;
     flex-shrink: 0;
 }
+
 aside a:hover {
     background-color: white;
     color: black;
 }
+
 main {
     padding: 0px 250px 0px 250px;
     overflow-y: auto;
@@ -50,6 +56,7 @@ main {
     flex-direction: column;
     align-items: center;
 }
+
 summary {
     list-style: none;
     cursor: pointer;
@@ -59,28 +66,30 @@ summary {
     border: 1px solid white;
     text-align: center;
 }
+
 details[open] {
     color: yellow;
     display: flex;
     height: 100%;
     flex-direction: column;   
 }
+
 .aside-links details a {
     margin-left: 10px;
     width: calc(100% - 10px);
 }
+
 summary:hover {
     background-color: #333333;
     transition: 0.3s;
 }
-/* aside details:not([open]) {
-    color: red;
-} */
+
 .aside-links {
     display: flex;
     flex-direction: column;
     height: calc(100vh - 80px);
 }
+
 .reset-button {
     background: none;
     border: none;
@@ -88,11 +97,13 @@ summary:hover {
     cursor: pointer;
     outline: none;
 }
+
 .menu-container {
     display: flex;
     flex-direction: row;
     gap: 20px;
 }
+
 .btn-primary {
     height: 50px;
     width: 60px;

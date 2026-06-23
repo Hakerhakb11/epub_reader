@@ -7,7 +7,6 @@ Index
 {% block style %}
 .output {
     hyphens: auto;
-    align-text: center;
 }
 {% endblock style %}
 
@@ -25,13 +24,13 @@ Index
 
 {% block body %}
 
-    <div style="display: flex; flex-direction: row;">
+    <div class="menu-container">
 
         <details name="menu" {% if user_text %} open {% endif %}>
             <summary style="margin-bottom: 40px;" >Print text now</summary>
             <form method="POST">
                 <textarea id="message" name="content_text" placeholder="Input your text" rows="4" cols="40"></textarea>
-                <button type="submit" style="block-size: 50px; inline-size: 60px;">Enter</button>
+                <button type="submit" class="btn-primary">Enter</button>
             </form>
         </details>
         

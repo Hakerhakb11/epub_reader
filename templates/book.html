@@ -8,67 +8,98 @@
         75% { transform: translateY(0); }
         100% { transform: translateY(-100%); }
     }
+    
     .button-group {
         display: flex;
         flex-direction: row;
+        align-items: center;
+        gap: 10px;
         position: sticky;
         top: 0;
         background-color: black;
         width: 100%;
+        padding: 10px 20px;
+        box-sizing: border-box;
         transition: transform 0.3s ease-in-out;
         transform: translateY(-100%);
-        transition-delay: 1s;
-
-        transform: translateY(-100%);
         animation: showPanelOnLoad 4.5s ease-in-out;
+        z-index: 1000;
     }
-    .button-group::after{
+    
+    .button-group::after {
         content: "";
         position: absolute;
         top: 100%;
         left: 0;
         width: 100%;
-        height: 75px;
-        transition: height 0.2s;
+        height: 30px;
     }
-    .button-group:hover  {
+    
+    .button-group:hover {
         animation: none;
-        transition-delay: 0s;
         transform: translateY(0);
     }
+    
     .button {
-        list-style: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        
+        background: none;
+        color: white;
+        font: inherit;
+        outline: none;
+        
+        height: 40px;
+        width: 50px;
+        border: 1px solid white;
         cursor: pointer;
         user-select: none;
-        height: 40px;
-        padding: 10px;
-        border: 1px solid white;
-        text-align: center;
-        width: 50px;
+        text-decoration: none;
+        transition: background-color 0.2s, color 0.2s, border-color 0.2s;
     }
+    
+    .button:hover:not(:disabled) {
+        background-color: white;
+        color: black;
+    }
+
     .button-back {
         width: 80px;
         margin-right: auto;
-        order: -1;
-        text-decoration: none;
     }
+
+    .button-mark {
+        width: 110px;
+    }
+    
+    .button:disabled {
+        background-color: #121212;
+        color: #444;
+        border-color: #333;
+        cursor: not-allowed;
+    }
+    
+    .button:disabled svg {
+        opacity: 0.2;
+    }
+
+    .bookmark-form {
+        display: contents;
+    }
+
     .chapters {
         overflow-y: auto;
         flex: 2;
-        border-bottom: 4px solid red
+        border-bottom: 4px solid red;
     }
     .bookmarks {
         border-top: 4px solid red;
         overflow-y: auto;
         flex: 1;
     }
-    .pagination {
-        display: flex;
-        justify-content: space-between;
-    }
-    .button-group:hover::after {
-        height: 150px; 
-    }
+
 {% endblock style %}
 
 {% block aside %}
@@ -93,36 +124,42 @@
 
     <div class="button-group">
         <a href="/" class="button button-back">Back</a>
-        <nav class="pagination">
-            {% if chapter.order_number > 0 %}
+
+        {% if chapter.order_number > 0 %}
             <a href="{{ url_for('book_view', book_id=book.id, chapter_id=chapter.order_number - 1) }}" class="button">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="height: 24px; width: 24px;">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                 </svg>
             </a>
-            {% else %}
-            <div></div>
-            {% endif %}
-        </nav>
-        <form method="POST" class="button" action="{{ url_for('set_bookmark', book_id=book.id, chapter_id=chapter.order_number) }}">
-            <button type="submit" style="block-size: 50px; inline-size: 60px">SetMark</button>
+        {% else %}
+            <button class="button" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="height: 24px; width: 24px;">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                </svg>
+            </button>
+        {% endif %}
+
+        <form method="POST" class="bookmark-form" action="{{ url_for('set_bookmark', book_id=book.id, chapter_id=chapter.order_number) }}">
+            <button type="submit" class="button button-mark">SetMark</button>
         </form>
-        <nav class="pagination">
-            {% if chapter.order_number < total_chapters - 1 %}
+
+        {% if chapter.order_number < total_chapters - 1 %}
             <a href="{{ url_for('book_view', book_id=book.id, chapter_id=chapter.order_number + 1) }}" class="button">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="height: 24px; width: 24px;">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                 </svg>
             </a>
-            {% else %}
-            <div></div>
-            {% endif %}
-        </nav>
-
+        {% else %}
+            <button class="button" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="height: 24px; width: 24px;">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                </svg>
+            </button>
+        {% endif %}
     </div>
 
     {% if text %}
-        <p>Количество слов: {{ words_count }}</p>
+        <p style="font-size: 16px; color: #888;">Количество слов: {{ words_count }}</p>
         <div class="output">
             <p>
                 {{ text | safe }}

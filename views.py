@@ -38,9 +38,10 @@ def add_epub_file(user_file):
                 file = efile.get_item_with_id(item_id)
                 raw_content = file.get_content()
                 soup = BeautifulSoup(raw_content, "xml")
+                title = file.get_name().replace("Text/", '').replace(".xhtml", '')
 
                 chapter = Chapter(
-                    title=f"{file.get_name()[5:]}",
+                    title=title,
                     content=str(soup.prettify()),
                     order_number=index,
                     book=new_book,

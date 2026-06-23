@@ -88,3 +88,13 @@ summary:hover {
     cursor: pointer;
     outline: none;
 }
+.menu-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+.btn-primary {
+    height: 50px;
+    width: 60px;
+    cursor: pointer;
+}

@@ -3,12 +3,11 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Index</title>
-        <title>
-            {% block title %}{% endblock title %}
-        </title>
+        <title>{% block title %}{% endblock title %}</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/CSS.css') }}">
-        {% block extra_head %} {% endblock extra_head %}
+        
+        {% block extra_head %}{% endblock extra_head %}
+        
         <style>
             {% block style %}{% endblock style %}
         </style>
@@ -16,7 +15,12 @@
     <body>
         <div class="container">
             <aside>
-                <details>
+                <details id="mainSidebar">
+                <script>
+                    if (localStorage.getItem('mainSidebarOpen') === 'true') {
+                        document.currentScript.parentElement.open = true;
+                    }
+                </script>
                     <summary>&#9776;</summary>
                     <div class="aside-links">
                         {% block aside %}{% endblock aside %}
@@ -27,5 +31,25 @@
                 {% block body %}{% endblock body %}
             </main>
         </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const sidebar = document.getElementById('mainSidebar');
+                
+                if (sidebar) {
+                    const isSidebarOpen = localStorage.getItem('mainSidebarOpen');
+                    
+                    if (isSidebarOpen === 'true') {
+                        sidebar.open = true;
+                    } else if (isSidebarOpen === 'false') {
+                        sidebar.open = false;
+                    }
+
+                    sidebar.addEventListener('toggle', () => {
+                        localStorage.setItem('mainSidebarOpen', sidebar.open);
+                    });
+                }
+            });
+        </script>
     </body>
 </html>

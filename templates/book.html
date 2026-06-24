@@ -84,8 +84,17 @@
             const toggleBtn = document.getElementById('toggleBookmarksBtn');
             
             let isResizing = false;
-            let savedHeight = 200;
-            let isCollapsed = false;
+
+            let savedHeight = parseInt(localStorage.getItem('bookmarksHeight'), 10) || 200;
+            let isCollapsed = localStorage.getItem('bookmarksCollapsed') === 'true';
+
+            if (isCollapsed) {
+                bookmarksPanel.classList.add('collapsed');
+                divider.classList.add('collapsed');
+                bookmarksPanel.style.height = '0px';
+            } else {
+                bookmarksPanel.style.height = `${savedHeight}px`;
+            }
 
             toggleBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -98,9 +107,12 @@
 
             function toggleBookmarks() {
                 isCollapsed = !isCollapsed;
+                localStorage.setItem('bookmarksCollapsed', isCollapsed);
+
                 if (isCollapsed) {
                     if (bookmarksPanel.offsetHeight > 0) {
                         savedHeight = bookmarksPanel.offsetHeight;
+                        localStorage.setItem('bookmarksHeight', savedHeight);
                     }
                     bookmarksPanel.classList.add('collapsed');
                     divider.classList.add('collapsed');
@@ -112,31 +124,26 @@
             }
 
             divider.addEventListener('mousedown', (e) => {
-                if (e.target.closest('#toggleBookmarksBtn')) return;
-                if (isCollapsed) return;
+                if (e.target.closest('#toggleBookmarksBtn')) return; 
+                if (isCollapsed) return; 
 
                 e.preventDefault();
-
                 isResizing = true;
                 
                 document.body.classList.add('resizing-active');
                 document.body.style.cursor = 'row-resize';
-                
                 bookmarksPanel.style.transition = 'none';
             });
 
             document.addEventListener('mousemove', (e) => {
                 if (!isResizing) return;
-
                 e.preventDefault();
 
                 const container = divider.parentElement;
                 if (!container) return;
 
                 const containerRect = container.getBoundingClientRect();
-                
                 const newHeight = containerRect.bottom - e.clientY;
-
                 const maxHeight = containerRect.height * 0.75;
 
                 if (newHeight >= 40 && newHeight <= maxHeight) {
@@ -151,8 +158,9 @@
                     
                     document.body.classList.remove('resizing-active');
                     document.body.style.cursor = 'default';
-                    
                     bookmarksPanel.style.transition = 'height 0.2s ease';
+                    
+                    localStorage.setItem('bookmarksHeight', savedHeight);
                 }
             });
         });

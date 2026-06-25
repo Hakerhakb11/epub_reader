@@ -138,3 +138,16 @@ def set_bookmark(book_id, chapter_id):
         return info
 
     return redirect(url_for("book_view", book_id=book_id, chapter_id=chapter_id))
+
+
+@app.route("/book/<int:book_id>/<int:chapter_id>/delete_bookmark", methods=["POST"])
+def delete_bookmark(book_id, chapter_id):
+
+    bookmark = db.session.scalar(db.select(Bookmark).where(
+        Bookmark.book_id == book_id, Bookmark.chapter_id == chapter_id))
+    
+    if (bookmark):
+        db.session.delete(bookmark)
+        db.session.commit()
+    
+    return redirect(url_for('book_view', book_id=book_id, chapter_id=chapter_id))

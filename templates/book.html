@@ -34,7 +34,7 @@
                     <summary class="three-dots">⋮</summary>
                     <div class="dropdown-content">
                         <a href="#" class="dropdown-item">Edit</a>
-                        <form action="/" method="POST">
+                        <form action=" {{ url_for('delete_bookmark', book_id=bookmark.book_id, chapter_id=bookmark.chapter_id) }}" method="POST">
                             <button type="submit" class="dropdown-item delete-btn">Delete</button>
                         </form>
                     </div>

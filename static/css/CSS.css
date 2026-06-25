@@ -68,10 +68,10 @@ summary {
 }
 
 details[open] {
-    color: yellow;
-    display: flex;
-    height: 100%;
-    flex-direction: column;   
+    /* color: yellow; */
+    /* display: flex; */
+    /* height: 100%; */
+    /* flex-direction: column;    */
 }
 
 .aside-links details a {

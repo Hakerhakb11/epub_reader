@@ -25,7 +25,21 @@
 
     <div class="bookmarks" id="bookmarksPanel">
         {% for bookmark in bookmarks %}
-            <a href="{{ url_for('book_view', book_id=bookmark.book_id, chapter_id=bookmark.chapter_id) }}">{{ bookmark.title }}</a>
+            <div class="bookmark-item">
+                <a href="{{ url_for('book_view', book_id=bookmark.book_id, chapter_id=bookmark.chapter_id) }}" class="bookmark-link">
+                    {{ bookmark.title }}
+                </a>
+
+                <details class="bookmark-menu">
+                    <summary class="three-dots">⋮</summary>
+                    <div class="dropdown-content">
+                        <a href="#" class="dropdown-item">Edit</a>
+                        <form action="/" method="POST">
+                            <button type="submit" class="dropdown-item delete-btn">Delete</button>
+                        </form>
+                    </div>
+                </details>
+            </div>
         {% endfor %}
     </div>
 {% endblock aside %}
@@ -68,7 +82,7 @@
     </div>
 
     {% if text %}
-        <p style="font-size: 16px; color: #888;">Количество слов: {{ words_count }}</p>
+        <p style="font-size: 16px; color: #888;">Words count: {{ words_count }}</p>
         <div class="output">
             <p>
                 {{ text | safe }}

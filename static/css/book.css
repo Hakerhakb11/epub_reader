@@ -171,3 +171,64 @@ body.resizing-active a,
 body.resizing-active button {
     pointer-events: none !important;
 }
+
+.bookmark-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 4px 8px;
+    border-bottom: 1px solid #333;
+}
+
+.bookmark-link {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-decoration: none;
+    color: #eee;
+}
+
+.bookmark-menu {
+    opacity: 0;
+    cursor: pointer;
+}
+
+.bookmark-item:hover .bookmark-menu {
+    opacity: 1;
+}
+
+.three-dots {
+    height: 56px;
+    list-style: none;
+    font-size: 18px;
+    padding: 0 5px;
+}
+.three-dots::-webkit-details-marker { display: none; }
+
+.dropdown-content {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background: #222;
+    border: 1px solid #444;
+    z-index: 1000;
+    min-width: 100px;
+}
+
+.dropdown-item {
+    display: block;
+    padding: 8px;
+    color: white;
+    text-decoration: none;
+    font-size: 12px;
+}
+.delete-btn {
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    color: #ff6666;
+    cursor: pointer;
+}

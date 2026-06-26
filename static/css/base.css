@@ -33,8 +33,7 @@ aside a {
     box-sizing: border-box;
     text-align: center;
     white-space: nowrap;
-    overflow: hidden;  
-    text-overflow: ellipsis;          
+    overflow: hidden;
     color: white;
     border: 2px solid white;
     padding: 10px;
@@ -65,13 +64,6 @@ summary {
     padding: 10px;
     border: 1px solid white;
     text-align: center;
-}
-
-details[open] {
-    /* color: yellow; */
-    /* display: flex; */
-    /* height: 100%; */
-    /* flex-direction: column;    */
 }
 
 .aside-links details a {

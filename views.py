@@ -145,9 +145,24 @@ def delete_bookmark(book_id, chapter_id):
 
     bookmark = db.session.scalar(db.select(Bookmark).where(
         Bookmark.book_id == book_id, Bookmark.chapter_id == chapter_id))
-    
+
     if (bookmark):
         db.session.delete(bookmark)
         db.session.commit()
-    
-    return redirect(url_for('book_view', book_id=book_id, chapter_id=chapter_id))
+
+    return redirect(request.referrer or url_for('book_view', book_id=book_id, chapter_id=chapter_id))
+
+
+@app.route("/book/<int:book_id>/<int:chapter_id>/edit_bookmark", methods=["POST"])
+def edit_bookmark(book_id, chapter_id):
+    new_title = request.form.get("new_title").strip()
+
+    if new_title:
+        bookmark = db.session.scalar(db.select(Bookmark).where(
+            Bookmark.book_id == book_id, Bookmark.chapter_id == chapter_id))
+
+        if bookmark:
+            bookmark.title = new_title
+            db.session.commit()
+
+    return redirect(request.referrer or url_for('book_view', book_id=book_id, chapter_id=chapter_id))

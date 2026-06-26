@@ -94,6 +94,11 @@
     min-height: 80px;
 }
 
+.chapters a.active {
+    background-color:#444;
+    font-weight: bold;
+}
+
 .sidebar-divider {
     display: flex;
     align-items: center;
@@ -184,10 +189,14 @@ body.resizing-active button {
 .bookmark-link {
     flex: 1;
     overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
     text-decoration: none;
     color: #eee;
+}
+
+.bookmark-link.active {
+    background-color:#444;
+    font-weight: bold;
 }
 
 .bookmark-menu {
@@ -205,6 +214,7 @@ body.resizing-active button {
     font-size: 18px;
     padding: 0 5px;
 }
+
 .three-dots::-webkit-details-marker { display: none; }
 
 .dropdown-content {
@@ -224,6 +234,7 @@ body.resizing-active button {
     text-decoration: none;
     font-size: 12px;
 }
+
 .delete-btn {
     background: none;
     border: none;
@@ -231,4 +242,47 @@ body.resizing-active button {
     text-align: left;
     color: #ff6666;
     cursor: pointer;
+}
+
+.bookmark-edit-form {
+    display: none;
+    width: 100%;
+    align-items: center;
+    gap: 8px;
+}
+
+.bookmark-edit-input {
+    flex: 1;
+    background: #222;
+    border: 1px solid #555;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.bookmark-edit-input:focus {
+    outline: none;
+    border-color: white;
+}
+
+.save-edit-btn, .cancel-edit-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 2px 6px;
+}
+
+.save-edit-btn { color: green; }
+
+.cancel-edit-btn { color: red; }
+
+.bookmark-item.is-editing .bookmark-link,
+.bookmark-item.is-editing .bookmark-menu {
+    display: none !important;
+}
+
+.bookmark-item.is-editing .bookmark-edit-form {
+    display: flex;
 }

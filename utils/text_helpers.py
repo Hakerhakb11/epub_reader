@@ -52,7 +52,7 @@ def add_epub_file(user_file):
             db.session.commit()
             return info
         else:
-            info = "Book already exist"
+            info = "This Book already exist"
             logging.info(info)
             return info
     except epub.EpubException:

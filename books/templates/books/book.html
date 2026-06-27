@@ -103,6 +103,16 @@
         {% endif %}
     </div>
 
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
     {% if text %}
         <p style="font-size: 16px; color: #888;">Words count: {{ words_count }}</p>
         <div class="output">

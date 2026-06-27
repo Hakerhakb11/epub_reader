@@ -1,6 +1,6 @@
 import logging
 
-from flask import Blueprint, redirect, render_template, request, url_for
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 
 from models import Book, Bookmark, Chapter, db
 from utils.text_helpers import words_count
@@ -54,10 +54,12 @@ def set_bookmark(book_id, chapter_id):
         )
         db.session.add(new_mark)
         db.session.commit()
+        flash("Bookmark added succesfully")
     else:
         info = "Bookmark already exist"
+        flash(info)
         logging.info(info)
-        return info
+        return redirect(url_for("books.book_view", book_id=book_id, chapter_id=chapter_id))
 
     return redirect(url_for("books.book_view", book_id=book_id, chapter_id=chapter_id))
 

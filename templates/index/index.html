@@ -55,9 +55,15 @@ Index
         </details>
     </div>
     
-    {% if info %}
-    <p> {{ info }} </p>
-    {% endif %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
     {% if user_text %}
     <p>Количество слов: {{ words_count }}</p>

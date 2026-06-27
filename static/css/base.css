@@ -8,7 +8,7 @@ body {
 .container {
     display: flex;
     flex-direction: row;
-    height: 100vh; 
+    height: 100vh;
 }
 
 aside {
@@ -18,13 +18,13 @@ aside {
     flex-direction: column;
     flex-shrink: 0;
     overflow: hidden;
-    
+
 }
 
 /* > говорит чтобы только главный элемент учитывался */
 aside:has(> details:not([open])) {
     width: 60px;
-    
+
 }
 
 aside a {
@@ -100,4 +100,72 @@ summary:hover {
     height: 50px;
     width: 60px;
     cursor: pointer;
+}
+
+.book-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 4px 8px;
+    border-bottom: 1px solid #333;
+}
+
+.book-link {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-decoration: none;
+    color: #eee;
+}
+
+.book-menu {
+    opacity: 0;
+    cursor: pointer;
+}
+
+.book-item:hover .book-menu {
+    opacity: 1;
+}
+
+details.book-menu[open] {
+    opacity: 1;
+}
+
+.dropdown-content {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background: #222;
+    border: 1px solid #444;
+    z-index: 1000;
+    min-width: 100px;
+}
+
+.dropdown-item {
+    display: block;
+    padding: 8px;
+    color: white;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+.dropdown-delete-btn {
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    color: #ff6666;
+    cursor: pointer;
+}
+
+.three-dots {
+    height: 56px;
+    list-style: none;
+    font-size: 18px;
+    padding: 0 5px;
+}
+
+.three-dots::-webkit-details-marker {
+    display: none;
 }

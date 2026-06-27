@@ -18,6 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let savedHeight = parseInt(localStorage.getItem('bookmarksHeight'), 10) || 200;
     let isCollapsed = localStorage.getItem('bookmarksCollapsed') === 'true';
 
+    bookmarksPanel.style.transition = 'none';
+
     if (isCollapsed) {
         bookmarksPanel.classList.add('collapsed');
         divider.classList.add('collapsed');
@@ -25,6 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         bookmarksPanel.style.height = `${savedHeight}px`;
     }
+
+    bookmarksPanel.offsetHeight;
+    bookmarksPanel.style.transition = 'height 0.2s ease';
 
     toggleBtn.addEventListener('click', (e) => {
         e.stopPropagation();

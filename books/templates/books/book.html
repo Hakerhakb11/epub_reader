@@ -44,14 +44,14 @@
                     {{ bookmark.title }}
                 </a>
 
-                <details class="bookmark-menu">
+                <details class="bookmark-menu" name="bookmark-dropdown">
                     <summary class="three-dots">⋮</summary>
                     <div class="dropdown-content">
 
                         <button type="button" class "button dropdown-item edit-triger-btn" onclick="startEdit(this)">Edit</button>
                         
                         <form action=" {{ url_for('books.delete_bookmark', book_id=bookmark.book_id, chapter_id=bookmark.chapter_id) }}" method="POST">
-                            <button type="submit" class="dropdown-item delete-btn">Delete</button>
+                            <button type="submit" class="dropdown-item dropdown-delete-btn">Delete</button>
                         </form>
                     </div>
                 </details>

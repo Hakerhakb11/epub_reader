@@ -1,7 +1,7 @@
-from flask import render_template, request
+from flask import redirect, render_template, request, url_for
 
 from app import app
-from models import Book
+from models import Book, db
 from utils.text_helpers import add_epub_file, words_count
 
 
@@ -23,3 +23,15 @@ def index():
     return render_template(
         "index/index.html", user_text=user_text, words_count=count, info=info, books=all_book
     )
+
+
+@app.route("/<int:book_id>/delete_book", methods=["POST"])
+def delete_book(book_id):
+
+    book = db.session.scalar(db.select(Book).where(
+        Book.id == book_id
+    ))
+    if book:
+        db.session.delete(book)
+        db.session.commit()
+    return redirect(url_for('index'))

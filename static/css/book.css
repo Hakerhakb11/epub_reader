@@ -1,7 +1,15 @@
 @keyframes showPanelOnLoad {
-    0% { transform: translateY(0); }
-    75% { transform: translateY(0); }
-    100% { transform: translateY(-100%); }
+    0% {
+        transform: translateY(0);
+    }
+
+    75% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-100%);
+    }
 }
 
 .button-group {
@@ -40,12 +48,12 @@
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    
+
     background: none;
     color: white;
     font: inherit;
     outline: none;
-    
+
     height: 40px;
     width: 50px;
     border: 1px solid white;
@@ -95,7 +103,7 @@
 }
 
 .chapters a.active {
-    background-color:#444;
+    background-color: #444;
     font-weight: bold;
 }
 
@@ -168,11 +176,12 @@
 .bookmarks.collapsed {
     height: 0px !important;
 }
+
 body.resizing-active {
     user-select: none !important;
 }
 
-body.resizing-active a, 
+body.resizing-active a,
 body.resizing-active button {
     pointer-events: none !important;
 }
@@ -195,7 +204,7 @@ body.resizing-active button {
 }
 
 .bookmark-link.active {
-    background-color:#444;
+    background-color: #444;
     font-weight: bold;
 }
 
@@ -208,40 +217,8 @@ body.resizing-active button {
     opacity: 1;
 }
 
-.three-dots {
-    height: 56px;
-    list-style: none;
-    font-size: 18px;
-    padding: 0 5px;
-}
-
-.three-dots::-webkit-details-marker { display: none; }
-
-.dropdown-content {
-    position: absolute;
-    right: 0;
-    top: 100%;
-    background: #222;
-    border: 1px solid #444;
-    z-index: 1000;
-    min-width: 100px;
-}
-
-.dropdown-item {
-    display: block;
-    padding: 8px;
-    color: white;
-    text-decoration: none;
-    font-size: 12px;
-}
-
-.delete-btn {
-    background: none;
-    border: none;
-    width: 100%;
-    text-align: left;
-    color: #ff6666;
-    cursor: pointer;
+details.bookmark-menu[open] {
+    opacity: 1;
 }
 
 .bookmark-edit-form {
@@ -266,7 +243,8 @@ body.resizing-active button {
     border-color: white;
 }
 
-.save-edit-btn, .cancel-edit-btn {
+.save-edit-btn,
+.cancel-edit-btn {
     background: none;
     border: none;
     cursor: pointer;
@@ -274,9 +252,13 @@ body.resizing-active button {
     padding: 2px 6px;
 }
 
-.save-edit-btn { color: green; }
+.save-edit-btn {
+    color: green;
+}
 
-.cancel-edit-btn { color: red; }
+.cancel-edit-btn {
+    color: red;
+}
 
 .bookmark-item.is-editing .bookmark-link,
 .bookmark-item.is-editing .bookmark-menu {

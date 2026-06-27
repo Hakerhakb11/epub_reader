@@ -59,7 +59,7 @@ def set_bookmark(book_id, chapter_id):
         logging.info(info)
         return info
 
-    return redirect(url_for("book_view", book_id=book_id, chapter_id=chapter_id))
+    return redirect(url_for("books.book_view", book_id=book_id, chapter_id=chapter_id))
 
 
 @books.route("/book/<int:book_id>/<int:chapter_id>/delete_bookmark", methods=["POST"])

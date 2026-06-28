@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const divider = document.getElementById('sidebarDivider');
     const bookmarksPanel = document.getElementById('bookmarksPanel');
     const toggleBtn = document.getElementById('toggleBookmarksBtn');
-    
+
     let isResizing = false;
 
     const activeChapter = document.querySelector('.chapters a.active');
@@ -59,12 +59,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     divider.addEventListener('mousedown', (e) => {
-        if (e.target.closest('#toggleBookmarksBtn')) return; 
-        if (isCollapsed) return; 
+        if (e.target.closest('#toggleBookmarksBtn')) return;
+        if (isCollapsed) return;
 
         e.preventDefault();
         isResizing = true;
-        
+
         document.body.classList.add('resizing-active');
         document.body.style.cursor = 'row-resize';
         bookmarksPanel.style.transition = 'none';
@@ -90,11 +90,11 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('mouseup', () => {
         if (isResizing) {
             isResizing = false;
-            
+
             document.body.classList.remove('resizing-active');
             document.body.style.cursor = 'default';
             bookmarksPanel.style.transition = 'height 0.2s ease';
-            
+
             localStorage.setItem('bookmarksHeight', savedHeight);
         }
     });
@@ -102,9 +102,9 @@ document.addEventListener('DOMContentLoaded', () => {
 function startEdit(button) {
     const item = button.closest('.bookmark-item');
     item.classList.add('is-editing');
-    
+
     item.querySelector('.bookmark-menu').removeAttribute('open');
-    
+
     const input = item.querySelector('.bookmark-edit-input');
     input.focus();
     input.setSelectionRange(input.value.length, input.value.length);

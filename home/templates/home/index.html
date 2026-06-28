@@ -1,4 +1,4 @@
-{% extends "index/base.html" %}
+{% extends "base.html" %}
 
 {% block title %}
 Index
@@ -23,7 +23,7 @@ Index
             <details class="book-menu" name="book-dropdown">
                 <summary class="three-dots">⋮</summary>
                 <div class="dropdown-content">
-                    <form action="{{ url_for('delete_book', book_id=book.id) }}" method="POST">
+                    <form action="{{ url_for('home.delete_book', book_id=book.id) }}" method="POST">
                         <button type="submit" class="dropdown-item dropdown-delete-btn">Delete</button>
                     </form>
                 </div>

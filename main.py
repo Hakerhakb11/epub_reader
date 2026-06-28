@@ -1,6 +1,6 @@
-from app import app
 from livereload import Server
-from app import db
+
+from app import app, db
 
 if __name__ == '__main__':
     with app.app_context():

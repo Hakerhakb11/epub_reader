@@ -1,7 +1,14 @@
+:root {
+    --block-content-width: 800px;
+    --body-background-color: black;
+    --body-color: white;
+}
+
 body {
+    padding: 0, 10px;
     margin: 0;
-    background-color: black;
-    color: white;
+    background-color: var(--body-background-color);
+    color: var(--body-color);
     font-size: 30px;
 }
 
@@ -34,8 +41,8 @@ aside a {
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
-    color: white;
-    border: 2px solid white;
+    color: var(--body-color);
+    border: 2px solid var(--body-color);
     padding: 10px;
     display: inline-block;
     transition: 0.2s;
@@ -43,17 +50,95 @@ aside a {
 }
 
 aside a:hover {
-    background-color: white;
-    color: black;
+    background-color: var(--body-color);
+    color: var(--body-background-color);
 }
 
 main {
-    padding: 0px 250px 0px 250px;
+    padding: 0px 25px;
     overflow-y: auto;
     display: flex;
     flex-grow: 1;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+}
+
+@keyframes showPanelOnLoad {
+    0% {
+        transform: translateY(0);
+    }
+
+    75% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-100%);
+    }
+}
+
+.button-group {
+    display: flex;
+    flex-direction: row;
+    /* align-items: center; */
+    justify-content: center;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+    background-color: var(--body-background-color);
+    width: 100%;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    transition: transform 0.3s ease-in-out;
+    transform: translateY(-100%);
+    animation: showPanelOnLoad 4.5s ease-in-out;
+    z-index: 1000;
+}
+
+.button-group::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 30px;
+}
+
+.button-group:hover {
+    animation: none;
+    transform: translateY(0);
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+
+    background: none;
+    color: var(--body-color);
+    font: inherit;
+    outline: none;
+
+    height: 40px;
+    width: 50px;
+    border: 1px solid var(--body-color);
+    cursor: pointer;
+    user-select: none;
+    text-decoration: none;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.button:hover:not(:disabled) {
+    background-color: var(--body-color);
+    color: var(--body-background-color);
+}
+
+.output {
+    width: 100%;
+    max-width: var(--block-content-width);
+    transition: max-width 0.3s ease;
 }
 
 summary {
@@ -62,8 +147,9 @@ summary {
     user-select: none;
     height: 40px;
     padding: 10px;
-    border: 1px solid white;
+    border: 1px solid var(--body-color);
     text-align: center;
+    transition: background-color 0.3s ease;
 }
 
 .aside-links details a {
@@ -72,8 +158,8 @@ summary {
 }
 
 summary:hover {
-    background-color: #333333;
-    transition: 0.3s;
+    background-color: var(--body-color);
+    color: var(--body-background-color);
 }
 
 .aside-links {
@@ -108,15 +194,14 @@ summary:hover {
     align-items: center;
     position: relative;
     padding: 4px 8px;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid var(--body-color);
 }
 
 .book-link {
     flex: 1;
     overflow: hidden;
     white-space: nowrap;
-    text-decoration: none;
-    color: #eee;
+    color: var(--body-color);
 }
 
 .book-menu {
@@ -136,8 +221,8 @@ details.book-menu[open] {
     position: absolute;
     right: 0;
     top: 100%;
-    background: #222;
-    border: 1px solid #444;
+    background: var(--body-background-color);
+    border: 1.5px solid var(--body-color);
     z-index: 1000;
     min-width: 100px;
 }
@@ -145,7 +230,7 @@ details.book-menu[open] {
 .dropdown-item {
     display: block;
     padding: 8px;
-    color: white;
+    color: var(--body-color);
     text-decoration: none;
     font-size: 12px;
 }
@@ -155,7 +240,7 @@ details.book-menu[open] {
     border: none;
     width: 100%;
     text-align: left;
-    color: #ff6666;
+    color: red;
     cursor: pointer;
 }
 

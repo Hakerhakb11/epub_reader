@@ -5,7 +5,7 @@
 {% block extra_head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/book.css') }}">
     <script src="{{url_for('static', filename='js/book.js') }}" defer></script>
-    {% endblock extra_head %}
+{% endblock extra_head %}
 
 {% block aside %}
     <div class="chapters">
@@ -58,8 +58,10 @@
 
                 <form action="{{url_for('books.edit_bookmark', book_id=bookmark.book_id, chapter_id=bookmark.chapter_id)}}", method="POST" class="bookmark-edit-form">
                     <input type="text" name="new_title" value="{{bookmark.title}}" class=bookmark-edit-input required autocomplete="off">
-                    <button type="submit" class="save-edit-btn" title="Сохранить">✓</button>
-                    <button type="button" class="cancel-edit-btn" onclick="cancelEdit(this)" title="Отмена">✕</button>
+                    <span>
+                        <button type="submit" class="save-edit-btn" title="Save">✓</button>
+                        <button type="button" class="cancel-edit-btn" onclick="cancelEdit(this)" title="Cancel">✕</button>
+                    </span>
                 </form>
             </div>
         {% endfor %}
@@ -72,13 +74,13 @@
 
         {% if chapter.order_number > 0 %}
             <a href="{{ url_for('books.book_view', book_id=book.id, chapter_id=chapter.order_number - 1) }}" class="button">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="height: 24px; width: 24px;">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                 </svg>
             </a>
         {% else %}
             <button class="button" disabled>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="height: 24px; width: 24px;">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                 </svg>
             </button>

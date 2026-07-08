@@ -37,14 +37,14 @@
         </script>
 
         {% for bookmark in bookmarks %}
-            <div class="bookmark-item">
+            <div class="aside-item">
                 <a href="{{ url_for('books.book_view', book_id=bookmark.book_id, chapter_id=bookmark.chapter_id) }}"
-                class="bookmark-link {% if bookmark.chapter_id == chapter.order_number %}active{% endif %}"
+                class="aside-link {% if bookmark.chapter_id == chapter.order_number %}active{% endif %}"
                 title="{{bookmark.title}}">
                     {{ bookmark.title }}
                 </a>
 
-                <details class="bookmark-menu" name="bookmark-dropdown">
+                <details class="aside-menu" name="bookmark-dropdown">
                     <summary class="three-dots">⋮</summary>
                     <div class="dropdown-content">
 

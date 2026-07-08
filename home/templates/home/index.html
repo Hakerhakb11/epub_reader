@@ -8,16 +8,15 @@ Index
 {% endblock style %}
 
 {% block aside %}
-    <div class="aside-links">
-        {% for book in books %}
-        <div class="book-item">
+    {% for book in books %}
+        <div class="aside-item">
             <a href="{{ url_for('books.book_view', book_id=book.id)}}"
-            class="book-link"
+            class="aside-link"
             title="{{book.title}}">
                 {{ book.title }}
             </a>
 
-            <details class="book-menu" name="book-dropdown">
+            <details class="aside-menu" name="book-dropdown">
                 <summary class="three-dots">⋮</summary>
                 <div class="dropdown-content">
                     <form action="{{ url_for('home.delete_book', book_id=book.id) }}" method="POST">

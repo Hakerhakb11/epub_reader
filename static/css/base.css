@@ -81,7 +81,6 @@ main {
 .button-group {
     display: flex;
     flex-direction: row;
-    /* align-items: center; */
     justify-content: center;
     gap: 10px;
     position: sticky;
@@ -152,14 +151,14 @@ summary {
     transition: background-color 0.3s ease;
 }
 
-.aside-links details a {
-    margin-left: 10px;
-    width: calc(100% - 10px);
-}
-
 summary:hover {
     background-color: var(--body-color);
     color: var(--body-background-color);
+}
+
+.aside-links details a {
+    margin-left: 10px;
+    width: calc(100% - 10px);
 }
 
 .aside-links {
@@ -188,32 +187,32 @@ summary:hover {
     cursor: pointer;
 }
 
-.book-item {
+.aside-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
-    padding: 4px 8px;
+    padding: 4px 0px;
     border-bottom: 1px solid var(--body-color);
 }
 
-.book-link {
+.aside-item:hover .aside-menu {
+    opacity: 1;
+}
+
+.aside-link {
     flex: 1;
     overflow: hidden;
     white-space: nowrap;
     color: var(--body-color);
 }
 
-.book-menu {
+.aside-menu {
     opacity: 0;
     cursor: pointer;
 }
 
-.book-item:hover .book-menu {
-    opacity: 1;
-}
-
-details.book-menu[open] {
+details.aside-menu[open] {
     opacity: 1;
 }
 

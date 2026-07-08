@@ -112,43 +112,6 @@ body.resizing-active button {
     pointer-events: none !important;
 }
 
-.bookmark-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    padding: 4px 8px;
-    border-bottom: 1px solid color-mix(in srgb, var(--body-color) 25%, transparent);
-    ;
-
-}
-
-.bookmark-link {
-    flex: 1;
-    overflow: hidden;
-    white-space: nowrap;
-    text-decoration: none;
-    color: var(--body-color);
-}
-
-.bookmark-link.active {
-    background-color: color-mix(in srgb, var(--body-color) 25%, transparent);
-    font-weight: bold;
-}
-
-.bookmark-menu {
-    opacity: 0;
-    cursor: pointer;
-}
-
-.bookmark-item:hover .bookmark-menu {
-    opacity: 1;
-}
-
-details.bookmark-menu[open] {
-    opacity: 1;
-}
-
 .bookmark-edit-form {
     display: none;
     width: 100%;

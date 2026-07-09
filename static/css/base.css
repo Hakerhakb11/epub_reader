@@ -164,6 +164,19 @@ main {
     transform: translateY(0);
 }
 
+.settings-button {
+    margin-left: auto;
+}
+
+.settings-panel {
+    color: var(--body-color);
+    width: 100px;
+    height: 100vh;
+    background-color: var(--body-background-color);
+    border: 4px solid red;
+    /* padding: 20px red; */
+}
+
 summary svg {
     fill: var(--body-color);
     height: 40px;

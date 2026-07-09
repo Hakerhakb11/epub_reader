@@ -88,6 +88,51 @@ main {
     }
 }
 
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+
+    background: none;
+    color: var(--body-color);
+    font: inherit;
+    outline: none;
+
+    height: 40px;
+    width: auto;
+    border: 1px solid var(--body-color);
+    cursor: pointer;
+    user-select: none;
+    text-decoration: none;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.button:disabled {
+    background-color: var(--body-background-color);
+    color: var(--body-color);
+    border-color: var(--body-color);
+    cursor: not-allowed;
+    opacity: 0.2;
+}
+
+.button.disabled {
+    opacity: 0.4;
+    pointer-events: none;
+    cursor: not-allowed;
+    user-select: none;
+}
+
+.button:hover:not(:disabled) {
+    background-color: var(--body-color);
+    color: var(--body-background-color);
+}
+
+.button-back {
+    width: auto;
+    margin-right: auto;
+}
+
 .button-group {
     display: flex;
     flex-direction: row;
@@ -129,30 +174,6 @@ summary:hover svg {
     fill: var(--body-background-color);
 }
 
-.button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-
-    background: none;
-    color: var(--body-color);
-    font: inherit;
-    outline: none;
-
-    height: 40px;
-    width: 50px;
-    border: 1px solid var(--body-color);
-    cursor: pointer;
-    user-select: none;
-    text-decoration: none;
-    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
-}
-
-.button:hover:not(:disabled) {
-    background-color: var(--body-color);
-    color: var(--body-background-color);
-}
 
 .output {
     width: 100%;

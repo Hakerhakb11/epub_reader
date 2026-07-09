@@ -2,6 +2,10 @@
     display: contents;
 }
 
+.button-pagination {
+    width: 50px;
+}
+
 /* SIDEBAR */
 
 .chapters {

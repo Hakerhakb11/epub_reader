@@ -29,7 +29,7 @@ Index
 {% endblock aside %}
 
 {% block top_bar %}
-    <details name="menu" {% if user_text %} open {% endif %}>
+    <details style="margin-left: auto;" name="menu" {% if user_text %} open {% endif %}>
         <summary>Print text now</summary>
         <form method="POST" style="margin-top: 40px;">
             <textarea id="message" name="content_text" placeholder="Input your text" rows="4" cols="40"></textarea>

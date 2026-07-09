@@ -1,95 +1,9 @@
-@keyframes showPanelOnLoad {
-    0% {
-        transform: translateY(0);
-    }
-
-    75% {
-        transform: translateY(0);
-    }
-
-    100% {
-        transform: translateY(-100%);
-    }
-}
-
-.button-group {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-    position: sticky;
-    top: 0;
-    background-color: black;
-    width: 100%;
-    padding: 10px 20px;
-    box-sizing: border-box;
-    transition: transform 0.3s ease-in-out;
-    transform: translateY(-100%);
-    animation: showPanelOnLoad 4.5s ease-in-out;
-    z-index: 1000;
-}
-
-.button-group::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    height: 30px;
-}
-
-.button-group:hover {
-    animation: none;
-    transform: translateY(0);
-}
-
-.button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-
-    background: none;
-    color: white;
-    font: inherit;
-    outline: none;
-
-    height: 40px;
-    width: 50px;
-    border: 1px solid white;
-    cursor: pointer;
-    user-select: none;
-    text-decoration: none;
-    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
-}
-
-.button:hover:not(:disabled) {
-    background-color: white;
-    color: black;
-}
-
-.button-back {
-    width: 80px;
-    margin-right: auto;
-}
-
-.button-mark {
-    width: 110px;
-}
-
-.button:disabled {
-    background-color: #121212;
-    color: #444;
-    border-color: #333;
-    cursor: not-allowed;
-}
-
-.button:disabled svg {
-    opacity: 0.2;
-}
-
 .bookmark-form {
     display: contents;
+}
+
+.button-pagination {
+    width: 50px;
 }
 
 /* SIDEBAR */
@@ -103,7 +17,7 @@
 }
 
 .chapters a.active {
-    background-color: #444;
+    background-color: color-mix(in srgb, var(--body-color) 25%, transparent);
     font-weight: bold;
 }
 
@@ -111,9 +25,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #111;
-    border-top: 1px solid #333;
-    border-bottom: 1px solid #333;
+    background-color: var(--body-background-color);
+    border-top: 1px solid var(--body-color);
+    border-bottom: 1px solid var(--body-color);
     height: 35px;
     padding: 0 10px;
     cursor: row-resize;
@@ -122,8 +36,8 @@
 }
 
 .sidebar-divider:hover {
-    background-color: #1c1c1c;
-    border-color: #555;
+    background-color: color-mix(in srgb, var(--body-color) 25%, transparent);
+    border-color: color-mix(in srgb, var(--body-color) 40%, transparent);
 }
 
 .toggle-bookmarks-btn {
@@ -132,7 +46,7 @@
     gap: 8px;
     background: none;
     border: none;
-    color: #888;
+    color: color-mix(in srgb, var(--body-color) 60%, transparent);
     font-size: 14px;
     font-weight: bold;
     cursor: pointer;
@@ -141,7 +55,7 @@
 }
 
 .toggle-bookmarks-btn:hover {
-    color: white;
+    color: var(--body-color);
 }
 
 .toggle-bookmarks-btn svg {
@@ -155,13 +69,9 @@
 }
 
 .drag-handle {
-    color: #444;
+    color: var(--body-color);
     font-size: 12px;
     letter-spacing: 2px;
-}
-
-.sidebar-divider:hover .drag-handle {
-    color: #888;
 }
 
 .bookmarks {
@@ -186,41 +96,6 @@ body.resizing-active button {
     pointer-events: none !important;
 }
 
-.bookmark-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    padding: 4px 8px;
-    border-bottom: 1px solid #333;
-}
-
-.bookmark-link {
-    flex: 1;
-    overflow: hidden;
-    white-space: nowrap;
-    text-decoration: none;
-    color: #eee;
-}
-
-.bookmark-link.active {
-    background-color: #444;
-    font-weight: bold;
-}
-
-.bookmark-menu {
-    opacity: 0;
-    cursor: pointer;
-}
-
-.bookmark-item:hover .bookmark-menu {
-    opacity: 1;
-}
-
-details.bookmark-menu[open] {
-    opacity: 1;
-}
-
 .bookmark-edit-form {
     display: none;
     width: 100%;
@@ -230,9 +105,8 @@ details.bookmark-menu[open] {
 
 .bookmark-edit-input {
     flex: 1;
-    background: #222;
-    border: 1px solid #555;
-    color: white;
+    background: var(--body-background-color);
+    color: var(--body-color);
     padding: 4px 8px;
     border-radius: 4px;
     font-size: 14px;
@@ -240,7 +114,7 @@ details.bookmark-menu[open] {
 
 .bookmark-edit-input:focus {
     outline: none;
-    border-color: white;
+    border-color: var(--body-color);
 }
 
 .save-edit-btn,
@@ -267,4 +141,5 @@ details.bookmark-menu[open] {
 
 .bookmark-item.is-editing .bookmark-edit-form {
     display: flex;
+    flex-direction: column;
 }

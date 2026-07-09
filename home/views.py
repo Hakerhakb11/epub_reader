@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 
 from models import Book, db
 from utils.text_helpers import add_epub_file, words_count
@@ -8,6 +8,7 @@ home = Blueprint('home', __name__, template_folder='templates')
 
 @home.route('/', methods=['GET', 'POST'])
 def index():
+    print('CHECK: ', session.get('theme'))
     user_text = ''
     count = 0
     if request.method == 'POST':
@@ -39,3 +40,14 @@ def delete_book(book_id):
         info = 'EROR. Failed to delete the Book'
         flash(info)
     return redirect(url_for('home.index'))
+
+
+@home.route('/set_theme', methods=['POST'])
+def set_theme():
+    theme = request.form.get('theme', 'dark')
+    if theme:
+        session['theme'] = theme
+        flash(f'Theme set to {theme}')
+    else:
+        flash('No theme selected')
+    return redirect(request.referrer or url_for('home.index'))

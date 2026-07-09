@@ -69,7 +69,7 @@
 {% endblock aside %}
 
 {% block top_bar %}
-    <a href="/" class="button button-back">Back</a>
+    <a href="/" class="button button-back">Home</a>
 
     {% if chapter.order_number > 0 %}
         <a href="{{ url_for('books.book_view', book_id=book.id, chapter_id=chapter.order_number - 1) }}" class="button">

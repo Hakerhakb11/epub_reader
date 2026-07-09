@@ -31,6 +31,11 @@
             </aside>
             <main>
                 <div class="button-group">
+                    {% if request.referrer and request.host in request.referrer %}
+                        <a href="#" onclick="history.back(); return false;" class="button">Back</a>
+                    {% else %}
+                        <a href="#" class="button disabled">Back</a>
+                    {% endif %}
                     {% block top_bar %}{% endblock top_bar %}
                     <details class="settings-button">
                         <summary title="Settings">

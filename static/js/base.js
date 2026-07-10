@@ -15,19 +15,39 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const themeSelect = document.getElementById('theme-select');
+    const bgHidden = document.getElementById('bg-color-hidden');
+    const textHidden = document.getElementById('text-color-hidden');
+    const bgPicker = document.getElementById('bg-picker');
+    const textPicker = document.getElementById('text-picker');
+    const presetButtons = document.querySelectorAll('.preset-btn');
+
+    presetButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const bg = button.getAttribute('data-bg');
+            const text = button.getAttribute('data-text');
+            
+            updateColors(bg, text);
+            saveSettingsToServer();
+        });
+    });
+
+    if (bgPicker && textPicker) {
+        bgPicker.addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--body-background-color', e.target.value);
+            if (bgHidden) bgHidden.value = e.target.value;
+        });
+        textPicker.addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--body-color', e.target.value);
+            if (textHidden) textHidden.value = e.target.value;
+        });
+
+        bgPicker.addEventListener('change', saveSettingsToServer);
+        textPicker.addEventListener('change', saveSettingsToServer);
+    }
+
     const interfaceFontSizeInput = document.getElementById('interface-font-size-select')
     const textFontSizeInput = document.getElementById('text-font-size-select');
     const containerWidthInput = document.getElementById('container-width-select');
-
-    if (themeSelect) {
-        themeSelect.addEventListener('change', (event) => {
-            const selectedTheme = event.target.value;
-            document.body.className = selectedTheme;
-            
-            saveSettingsToServer();
-        });
-    }
 
     if (interfaceFontSizeInput) {
         interfaceFontSizeInput.addEventListener('input', (event) => {
@@ -79,4 +99,15 @@ function saveSettingsToServer() {
         }
     })
     .catch(error => console.error('Network error:', error));
+}
+
+function updateColors(bgColor, textColor) {
+    document.documentElement.style.setProperty('--body-background-color', bgColor);
+    document.documentElement.style.setProperty('--body-color', textColor);
+
+    if (bgHidden) bgHidden.value = bgColor;
+    if (textHidden) textHidden.value = textColor;
+
+    if (bgPicker) bgPicker.value = bgColor;
+    if (textPicker) textPicker.value = textColor;
 }

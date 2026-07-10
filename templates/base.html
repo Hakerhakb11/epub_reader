@@ -11,10 +11,15 @@
         {% block extra_head %}{% endblock extra_head %}
         
         <style>
-            {% block style %}{% endblock style %}
+            {% block style %}
+            :root {
+                --block-content-width: {{ session.get('container-width', 60) }}%;
+                --body-font-size: {{ session.get('font-size', 16) }}px;
+            }
+            {% endblock style %}
         </style>
     </head>
-    <body class="{% if session.get('theme') == 'dark' %}dark-theme{% else %}light-theme{% endif %}">
+    <body class="{{ session.get('theme', 'dark') }}">
         <div class="container">
             <aside>
                 <details id="mainSidebar">
@@ -44,16 +49,21 @@
                             </svg>
                         </summary>
                         <div class="settings-panel">
-                            <form method="POST" action="{{ url_for('home.set_theme') }}">
+                            <form method="POST" action="{{ url_for('home.set_configuration') }}">
                                 <label for="theme-select">Theme:</label>
                                 <select name="theme" id="theme-select">
                                     <option value="dark" {% if session.get('theme', 'dark') == 'dark' %}selected{% endif %}>dark</option>
                                     <option value="light" {% if session.get('theme') == 'light' %}selected{% endif %}>light</option>
                                 </select>
 
-                                <input type="range" name="font_size" min="12" max="35" value="{{ session.get("font_size", 16) }}" oninput="this.nextElementSibling.value = this.value">
-                                <output>{{ session.get("font_size", 16) }}</output>
-                                
+                                <label for="font-size-select">Font Size:</label>
+                                <input type="range" name="font-size" id="font-size-select" min="10" max="50" value="{{ session.get("font-size", 16) }}" oninput="this.nextElementSibling.value = this.value">
+                                <output>{{ session.get("font-size", 16) }}</output>
+
+                                <label for="container-width-select">Container Width:</label>
+                                <input type="range" name="container-width" id="container-width-select" min="1" max="100" value="{{ session.get("container-width", 60) }}" oninput="this.nextElementSibling.value = this.value">
+                                <output>{{ session.get("container-width", 60) }}</output>
+
                                 <button type="submit">Apply</button>
                             </form>
                         </div>

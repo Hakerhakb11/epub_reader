@@ -1,15 +1,16 @@
 :root {
-    --block-content-width: 800px;
+    --block-content-width: 60%;
+    --body-background-color: black;
+    --body-color: white;
+    --body-font-size: 25px;
+}
+
+body.dark {
     --body-background-color: black;
     --body-color: white;
 }
 
-body.dark-theme {
-    --body-background-color: black;
-    --body-color: white;
-}
-
-body.light-theme {
+body.light {
     --body-background-color: white;
     --body-color: black;
 }
@@ -19,7 +20,7 @@ body {
     margin: 0;
     background-color: var(--body-background-color);
     color: var(--body-color);
-    font-size: 30px;
+    font-size: var(--body-font-size);
 }
 
 .container {

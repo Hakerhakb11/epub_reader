@@ -42,12 +42,19 @@ def delete_book(book_id):
     return redirect(url_for('home.index'))
 
 
-@home.route('/set_theme', methods=['POST'])
-def set_theme():
+@home.route('/set_configuration', methods=['POST'])
+def set_configuration():
     theme = request.form.get('theme', 'dark')
-    if theme:
+    font_size = request.form.get("font-size", 16)
+    container_width = request.form.get("container-width", 60)
+
+    if session.get('theme') != theme:
         session['theme'] = theme
         flash(f'Theme set to {theme}')
-    else:
-        flash('No theme selected')
+    if session.get('font-size') != font_size:
+        session['font-size'] = font_size
+        flash(f'Font size set to {font_size}')
+    if session.get('container-width') != container_width:
+        session['container-width'] = container_width
+        flash(f'Container width set to {container_width}')
     return redirect(request.referrer or url_for('home.index'))

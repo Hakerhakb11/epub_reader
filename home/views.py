@@ -64,4 +64,12 @@ def set_configuration():
     if session.get('container-width') != container_width:
         session['container-width'] = container_width
         flash(f'Container width set to {container_width}')
+
+    if (
+        request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+        or request.is_json
+        or 'fetch' in request.headers.get('User-Agent', '').lower()
+    ):
+        return {'status': 'success'}, 200
+
     return redirect(request.referrer or url_for('home.index'))

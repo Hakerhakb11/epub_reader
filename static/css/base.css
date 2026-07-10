@@ -21,7 +21,7 @@ body {
 }
 
 aside {
-    width: 210px;
+    width: var(--aside-width);
     transition: width 0.3s ease;
     display: flex;
     flex-direction: column;

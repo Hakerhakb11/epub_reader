@@ -18,6 +18,7 @@
                 --block-content-width: {{ session.get('container-width', 60) }}%;
                 --body-font-size: {{ session.get('interface-font-size', 16) }}px;
                 --text-font-size: {{ session.get('text-font-size', 16) }}px;
+                --aside-width: {{ session.get('aside-width', 210) }}px;
             }
             {% block style %}{% endblock style %}
         </style>
@@ -88,6 +89,10 @@
                                 <label for="interface-font-size-select">Interface Font Size:</label>
                                 <input type="range" name="interface-font-size" id="interface-font-size-select" min="10" max="50" value="{{ session.get("interface-font-size", 16) }}" oninput="this.nextElementSibling.value = this.value">
                                 <output>{{ session.get("interface-font-size", 16) }}</output>
+
+                                <label for="aside-width-select">Aside Width:</label>
+                                <input type="range" name="aside-width" id="aside-width-select" min="100" max="600" value="{{ session.get("aside-width", 210) }}" oninput="this.nextElementSibling.value = this.value">
+                                <output>{{ session.get("aside-width", 210) }}</output>
 
                                 <button type="submit">Apply</button>
                             </form>

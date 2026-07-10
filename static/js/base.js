@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const interfaceFontSizeInput = document.getElementById('interface-font-size-select')
     const textFontSizeInput = document.getElementById('text-font-size-select');
     const containerWidthInput = document.getElementById('container-width-select');
+    const asideWidthInput = document.getElementById('aside-width-select');
 
     if (interfaceFontSizeInput) {
         interfaceFontSizeInput.addEventListener('input', (event) => {
@@ -81,6 +82,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         containerWidthInput.addEventListener('change', saveSettingsToServer);
     }
+
+    if (asideWidthInput) {
+        asideWidthInput.addEventListener('input', (event) => {
+            const value = event.target.value;
+            document.documentElement.style.setProperty('--aside-width', `${value}px`);
+            
+            asideWidthInput.nextElementSibling.value = value;
+        });
+
+        asideWidthInput.addEventListener('change', saveSettingsToServer);
+    }
+
 });
 
 function saveSettingsToServer() {

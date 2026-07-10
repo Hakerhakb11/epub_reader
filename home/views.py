@@ -48,6 +48,7 @@ def set_configuration():
     interface_font_size = request.form.get('interface-font-size', 16)
     text_font_size = request.form.get('text-font-size', 16)
     container_width = request.form.get('container-width', 60)
+    aside_width = request.form.get('aside-width', 210)
 
     if session.get('theme') != theme:
         session['theme'] = theme
@@ -64,6 +65,10 @@ def set_configuration():
     if session.get('container-width') != container_width:
         session['container-width'] = container_width
         flash(f'Container width set to {container_width}')
+
+    if session.get('aside-width') != aside_width:
+        session['aside-width'] = aside_width
+        flash(f'Aside width set to {aside_width}')
 
     if (
         request.headers.get('X-Requested-With') == 'XMLHttpRequest'

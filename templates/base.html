@@ -11,12 +11,12 @@
         {% block extra_head %}{% endblock extra_head %}
         
         <style>
-            {% block style %}
             :root {
                 --block-content-width: {{ session.get('container-width', 60) }}%;
-                --body-font-size: {{ session.get('font-size', 16) }}px;
+                --body-font-size: {{ session.get('interface-font-size', 16) }}px;
+                --text-font-size: {{ session.get('text-font-size', 16) }}px;
             }
-            {% endblock style %}
+            {% block style %}{% endblock style %}
         </style>
     </head>
     <body class="{{ session.get('theme', 'dark') }}">
@@ -56,13 +56,17 @@
                                     <option value="light" {% if session.get('theme') == 'light' %}selected{% endif %}>light</option>
                                 </select>
 
-                                <label for="font-size-select">Font Size:</label>
-                                <input type="range" name="font-size" id="font-size-select" min="10" max="50" value="{{ session.get("font-size", 16) }}" oninput="this.nextElementSibling.value = this.value">
-                                <output>{{ session.get("font-size", 16) }}</output>
-
+                                <label for="text-font-size-select">Text Font Size:</label>
+                                <input type="range" name="text-font-size" id="text-font-size-select" min="10" max="50" value="{{ session.get("text-font-size", 16) }}" oninput="this.nextElementSibling.value = this.value">
+                                <output>{{ session.get("text-font-size", 16) }}</output>
+                                
                                 <label for="container-width-select">Container Width:</label>
                                 <input type="range" name="container-width" id="container-width-select" min="1" max="100" value="{{ session.get("container-width", 60) }}" oninput="this.nextElementSibling.value = this.value">
                                 <output>{{ session.get("container-width", 60) }}</output>
+                                
+                                <label for="interface-font-size-select">Interface Font Size:</label>
+                                <input type="range" name="interface-font-size" id="interface-font-size-select" min="10" max="50" value="{{ session.get("interface-font-size", 16) }}" oninput="this.nextElementSibling.value = this.value">
+                                <output>{{ session.get("interface-font-size", 16) }}</output>
 
                                 <button type="submit">Apply</button>
                             </form>

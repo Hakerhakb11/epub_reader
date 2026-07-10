@@ -93,8 +93,6 @@
                                 <label for="aside-width-select">Aside Width:</label>
                                 <input type="range" name="aside-width" id="aside-width-select" min="100" max="600" value="{{ session.get("aside-width", 210) }}" oninput="this.nextElementSibling.value = this.value">
                                 <output>{{ session.get("aside-width", 210) }}</output>
-
-                                <button type="submit">Apply</button>
                             </form>
                         </div>
                     </details>

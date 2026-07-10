@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Sidebar state
     const sidebar = document.getElementById('mainSidebar');
 
     if (sidebar) {
@@ -15,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Color settings
     const bgHidden = document.getElementById('bg-color-hidden');
     const textHidden = document.getElementById('text-color-hidden');
     const bgPicker = document.getElementById('bg-picker');
@@ -45,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         textPicker.addEventListener('change', saveSettingsToServer);
     }
 
+    // Font size and container width settings
     const interfaceFontSizeInput = document.getElementById('interface-font-size-select')
     const textFontSizeInput = document.getElementById('text-font-size-select');
     const containerWidthInput = document.getElementById('container-width-select');
@@ -108,7 +111,7 @@ function saveSettingsToServer() {
     })
     .then(response => {
         if (!response.ok) {
-            console.error('Eror, saveSettingsToServer failed:', response.statusText);
+            console.error('Error. saveSettingsToServer failed:', response.statusText);
         }
     })
     .catch(error => console.error('Network error:', error));

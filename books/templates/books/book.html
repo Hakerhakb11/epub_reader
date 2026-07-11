@@ -119,9 +119,11 @@
     {% if text %}
         <p style="font-size: 16px; color: #888;">Words count: {{ words_count }}</p>
         <div class="output">
-            <p>
-                {{ text | safe }}
+            {% for paragraph in text.split('\n') %}
+            <p class="paragraph">
+                {{ paragraph | safe }}
             </p>
+            {% endfor %}
         </div>
     ```
     {% endif %}

@@ -7,6 +7,15 @@ body.resizing-active button {
     pointer-events: none !important;
 }
 
+.paragraph {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 4px;
+    background-color: color-mix(in srgb, var(--body-color) 10%, transparent);
+    color: var(--body-color);
+}
+
 .bookmark-form {
     display: contents;
 }

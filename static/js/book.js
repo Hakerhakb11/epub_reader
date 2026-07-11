@@ -99,18 +99,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
 function startEdit(button) {
-    const item = button.closest('.bookmark-item');
+    const item = button.closest('.aside-item');
+    if (!item) return;
+
     item.classList.add('is-editing');
 
-    item.querySelector('.bookmark-menu').removeAttribute('open');
+    const menu = item.querySelector('.aside-menu');
+    if (menu) menu.removeAttribute('open');
 
     const input = item.querySelector('.bookmark-edit-input');
-    input.focus();
-    input.setSelectionRange(input.value.length, input.value.length);
+    if (input) {
+        input.focus();
+        input.setSelectionRange(input.value.length, input.value.length);
+    }
 }
 
 function cancelEdit(button) {
-    const item = button.closest('.bookmark-item');
-    item.classList.remove('is-editing');
+    const item = button.closest('.aside-item');
+    if (item) {
+        item.classList.remove('is-editing');
+    }
 }

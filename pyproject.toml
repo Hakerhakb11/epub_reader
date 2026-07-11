@@ -5,7 +5,7 @@ description = "b file"
 authors = [
     {name = "Hakerhakb11",email = "igorshilov2007@gmail.com"}
 ]
-requires-python = ">=3.14,<3.16"
+requires-python = ">=3.14,<3.15"
 dependencies = [
     "alembic (==1.18.4)",
     "beautifulsoup4 (==4.14.3)",
@@ -29,7 +29,8 @@ dependencies = [
     "tornado (==6.5.5)",
     "typing-extensions (==4.15.0)",
     "werkzeug (==3.1.8)",
-    "pywebview (>=6.2.1,<7.0.0)"
+    "pywebview (>=6.2.1,<7.0.0)",
+    "pythonnet (>=3.1.0,<4.0.0)"
 ]
 
 [tool.poetry]

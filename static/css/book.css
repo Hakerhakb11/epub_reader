@@ -94,8 +94,8 @@ body.resizing-active button {
     height: 0px !important;
 }
 
-.bookmark-item.is-editing .bookmark-link,
-.bookmark-item.is-editing .bookmark-menu {
+.aside-item.is-editing .aside-link,
+.aside-item.is-editing .aside-menu {
     display: none !important;
 }
 
@@ -106,7 +106,7 @@ body.resizing-active button {
     gap: 8px;
 }
 
-.bookmark-item.is-editing .bookmark-edit-form {
+.aside-item.is-editing .bookmark-edit-form {
     display: flex;
     flex-direction: column;
 }

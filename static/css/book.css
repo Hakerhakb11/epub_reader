@@ -1,3 +1,12 @@
+body.resizing-active {
+    user-select: none !important;
+}
+
+body.resizing-active a,
+body.resizing-active button {
+    pointer-events: none !important;
+}
+
 .bookmark-form {
     display: contents;
 }
@@ -5,8 +14,6 @@
 .button-pagination {
     width: 50px;
 }
-
-/* SIDEBAR */
 
 .chapters {
     display: flex;
@@ -40,6 +47,12 @@
     border-color: color-mix(in srgb, var(--body-color) 40%, transparent);
 }
 
+.drag-handle {
+    color: var(--body-color);
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
 .toggle-bookmarks-btn {
     display: flex;
     align-items: center;
@@ -68,12 +81,6 @@
     transform: rotate(-90deg);
 }
 
-.drag-handle {
-    color: var(--body-color);
-    font-size: 12px;
-    letter-spacing: 2px;
-}
-
 .bookmarks {
     display: flex;
     flex-direction: column;
@@ -87,13 +94,9 @@
     height: 0px !important;
 }
 
-body.resizing-active {
-    user-select: none !important;
-}
-
-body.resizing-active a,
-body.resizing-active button {
-    pointer-events: none !important;
+.bookmark-item.is-editing .bookmark-link,
+.bookmark-item.is-editing .bookmark-menu {
+    display: none !important;
 }
 
 .bookmark-edit-form {
@@ -101,6 +104,11 @@ body.resizing-active button {
     width: 100%;
     align-items: center;
     gap: 8px;
+}
+
+.bookmark-item.is-editing .bookmark-edit-form {
+    display: flex;
+    flex-direction: column;
 }
 
 .bookmark-edit-input {
@@ -132,14 +140,4 @@ body.resizing-active button {
 
 .cancel-edit-btn {
     color: red;
-}
-
-.bookmark-item.is-editing .bookmark-link,
-.bookmark-item.is-editing .bookmark-menu {
-    display: none !important;
-}
-
-.bookmark-item.is-editing .bookmark-edit-form {
-    display: flex;
-    flex-direction: column;
 }

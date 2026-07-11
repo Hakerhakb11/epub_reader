@@ -3,20 +3,11 @@
     --body-background-color: black;
     --body-color: white;
     --body-font-size: 25px;
-}
-
-body.dark {
-    --body-background-color: black;
-    --body-color: white;
-}
-
-body.light {
-    --body-background-color: white;
-    --body-color: black;
+    --text-font-size: 16px;
 }
 
 body {
-    padding: 0, 10px;
+    padding: 0 10px;
     margin: 0;
     background-color: var(--body-background-color);
     color: var(--body-color);
@@ -29,20 +20,35 @@ body {
     height: 100vh;
 }
 
+main {
+    padding: 0px 25px;
+    overflow-y: auto;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.output {
+    width: 100%;
+    max-width: var(--block-content-width);
+    font-size: var(--text-font-size);
+    transition: max-width 0.3s ease;
+}
+
 aside {
-    width: 210px;
+    width: var(--aside-width);
     transition: width 0.3s ease;
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
     overflow: hidden;
-
 }
 
 /* > говорит чтобы только главный элемент учитывался */
 aside:has(> details:not([open])) {
     width: 60px;
-
 }
 
 aside a {
@@ -65,28 +71,44 @@ aside a:hover {
     color: var(--body-background-color);
 }
 
-main {
-    padding: 0px 25px;
-    overflow-y: auto;
+.aside-links {
     display: flex;
-    flex-grow: 1;
     flex-direction: column;
-    align-items: center;
-    width: 100%;
+    height: calc(100vh - 80px);
 }
 
-@keyframes showPanelOnLoad {
-    0% {
-        transform: translateY(0);
-    }
+.aside-links details a {
+    margin-left: 10px;
+    width: calc(100% - 10px);
+}
 
-    75% {
-        transform: translateY(0);
-    }
+.aside-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 4px 0px;
+    border-bottom: 1px solid var(--body-color);
+}
 
-    100% {
-        transform: translateY(-100%);
-    }
+.aside-item:hover .aside-menu {
+    opacity: 1;
+}
+
+.aside-link {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    color: var(--body-color);
+}
+
+.aside-menu {
+    opacity: 0;
+    cursor: pointer;
+}
+
+details.aside-menu[open] {
+    opacity: 1;
 }
 
 .button {
@@ -134,6 +156,24 @@ main {
     margin-right: auto;
 }
 
+.settings-button {
+    margin-left: auto;
+}
+
+.reset-button {
+    background: none;
+    border: none;
+    font: inherit;
+    cursor: pointer;
+    outline: none;
+}
+
+.btn-primary {
+    height: 50px;
+    width: 60px;
+    cursor: pointer;
+}
+
 .button-group {
     display: flex;
     flex-direction: row;
@@ -165,41 +205,37 @@ main {
     transform: translateY(0);
 }
 
-.settings-button {
-    margin-left: auto;
+.menu-container {
+    display: flex;
+    flex-direction: row;
 }
 
 .settings-panel {
+    position: absolute;
+    top: 100%;
+    right: 0;
     color: var(--body-color);
-    width: 100px;
-    height: 100vh;
+    width: 260px;
+    height: auto;
     background-color: var(--body-background-color);
-    border: 4px solid red;
-    /* padding: 20px red; */
+    border: 2px solid var(--body-color);
+    padding: 15px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.3);
+    border-radius: 4px;
+    font-size: 30px;
 }
 
-summary svg {
-    fill: var(--body-color);
-    height: 40px;
-    width: 50px;
-}
-
-summary:hover svg {
-    fill: var(--body-background-color);
-}
-
-
-.output {
-    width: 100%;
-    max-width: var(--block-content-width);
-    transition: max-width 0.3s ease;
+.settings-panel form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 summary {
     list-style: none;
     cursor: pointer;
     user-select: none;
-    height: 40px;
+    height: auto;
     padding: 10px;
     border: 1px solid var(--body-color);
     text-align: center;
@@ -211,64 +247,29 @@ summary:hover {
     color: var(--body-background-color);
 }
 
-.aside-links details a {
-    margin-left: 10px;
-    width: calc(100% - 10px);
+summary svg {
+    fill: var(--body-color);
 }
 
-.aside-links {
-    display: flex;
-    flex-direction: column;
-    height: calc(100vh - 80px);
+summary:hover svg {
+    fill: var(--body-background-color);
 }
 
-.reset-button {
-    background: none;
-    border: none;
-    font: inherit;
-    cursor: pointer;
-    outline: none;
+svg {
+    height: var(--body-font-size);
+    width: var(--body-font-size);
 }
 
-.menu-container {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-}
-
-.btn-primary {
-    height: 50px;
-    width: 60px;
-    cursor: pointer;
-}
-
-.aside-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    padding: 4px 0px;
-    border-bottom: 1px solid var(--body-color);
-}
-
-.aside-item:hover .aside-menu {
-    opacity: 1;
-}
-
-.aside-link {
-    flex: 1;
-    overflow: hidden;
-    white-space: nowrap;
+.three-dots {
     color: var(--body-color);
+    height: 56px;
+    list-style: none;
+    font-size: 18px;
+    padding: 0 5px;
 }
 
-.aside-menu {
-    opacity: 0;
-    cursor: pointer;
-}
-
-details.aside-menu[open] {
-    opacity: 1;
+.three-dots::-webkit-details-marker {
+    display: none;
 }
 
 .dropdown-content {
@@ -298,14 +299,14 @@ details.aside-menu[open] {
     cursor: pointer;
 }
 
-.three-dots {
-    color: var(--body-color);
-    height: 56px;
-    list-style: none;
-    font-size: 18px;
-    padding: 0 5px;
-}
-
-.three-dots::-webkit-details-marker {
-    display: none;
+@keyframes showPanelOnLoad {
+    0% {
+        transform: translateY(0);
+    }
+    75% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-100%);
+    }
 }

@@ -11,15 +11,19 @@
         {% block extra_head %}{% endblock extra_head %}
         
         <style>
-            {% block style %}
             :root {
+                --body-background-color: {{ session.get('bg-color', '#121212') }};
+                --body-color: {{ session.get('text-color', '#ffffff') }};
+
                 --block-content-width: {{ session.get('container-width', 60) }}%;
-                --body-font-size: {{ session.get('font-size', 16) }}px;
+                --body-font-size: {{ session.get('interface-font-size', 16) }}px;
+                --text-font-size: {{ session.get('text-font-size', 16) }}px;
+                --aside-width: {{ session.get('aside-width', 210) }}px;
             }
-            {% endblock style %}
+            {% block style %}{% endblock style %}
         </style>
     </head>
-    <body class="{{ session.get('theme', 'dark') }}">
+    <body>
         <div class="container">
             <aside>
                 <details id="mainSidebar">
@@ -50,21 +54,45 @@
                         </summary>
                         <div class="settings-panel">
                             <form method="POST" action="{{ url_for('home.set_configuration') }}">
+
+                                <input type="hidden" name="bg-color" id="bg-color-hidden" value="{{ session.get('bg-color', '#121212') }}">
+                                <input type="hidden" name="text-color" id="text-color-hidden" value="{{ session.get('text-color', '#e0e0e0')}}">
+
                                 <label for="theme-select">Theme:</label>
-                                <select name="theme" id="theme-select">
-                                    <option value="dark" {% if session.get('theme', 'dark') == 'dark' %}selected{% endif %}>dark</option>
-                                    <option value="light" {% if session.get('theme') == 'light' %}selected{% endif %}>light</option>
-                                </select>
+                                <div id="theme-select">
+                                    <button type="button" class="button preset-btn" data-bg="#000000" data-text="#ffffff" style="background: #000000; color: #ffffff; border: 1px solid #444;">A</button>
+                                    <button type="button" class="button preset-btn" data-bg="#121212" data-text="#e0e0e0" style="background: #121212; color: #e0e0e0; border: 1px solid #444;">A</button>
+                                    <button type="button" class="button preset-btn" data-bg="#f4ecd8" data-text="#5b4636" style="background: #f4ecd8; color: #5b4636; border: 1px solid #dacbb3;">A</button>
+                                    <button type="button" class="button preset-btn" data-bg="#f2f2f3" data-text="#212529" style="background: #f2f2f3; color: #212529; border: 1px solid #ccc;">A</button>
+                                    <button type="button" class="button preset-btn" data-bg="#ffffff" data-text="#212529" style="background: #ffffff; color: #212529; border: 1px solid #ccc;">A</button>
+                                </div>
+                                <label>Custom Palette:</label>
+                                <div class="custom-colors">
+                                    <div class="color-picker-wrapper">
+                                        <label for="bg-picker">Background:</label>
+                                        <input type="color" id="bg-picker" value="{{ session.get('bg-color', '#121212') }}">
+                                    </div>
+                                    <div class="color-picker-wrapper">
+                                        <label for="text-picker">Text:</label>
+                                        <input type="color" id="text-picker" value="{{ session.get('text-color', '#e0e0e0') }}">
+                                    </div>
+                                </div>
 
-                                <label for="font-size-select">Font Size:</label>
-                                <input type="range" name="font-size" id="font-size-select" min="10" max="50" value="{{ session.get("font-size", 16) }}" oninput="this.nextElementSibling.value = this.value">
-                                <output>{{ session.get("font-size", 16) }}</output>
-
+                                <label for="text-font-size-select">Text Font Size:</label>
+                                <input type="range" name="text-font-size" id="text-font-size-select" min="10" max="50" value="{{ session.get("text-font-size", 16) }}" oninput="this.nextElementSibling.value = this.value">
+                                <output>{{ session.get("text-font-size", 16) }}</output>
+                                
                                 <label for="container-width-select">Container Width:</label>
                                 <input type="range" name="container-width" id="container-width-select" min="1" max="100" value="{{ session.get("container-width", 60) }}" oninput="this.nextElementSibling.value = this.value">
                                 <output>{{ session.get("container-width", 60) }}</output>
+                                
+                                <label for="interface-font-size-select">Interface Font Size:</label>
+                                <input type="range" name="interface-font-size" id="interface-font-size-select" min="10" max="50" value="{{ session.get("interface-font-size", 16) }}" oninput="this.nextElementSibling.value = this.value">
+                                <output>{{ session.get("interface-font-size", 16) }}</output>
 
-                                <button type="submit">Apply</button>
+                                <label for="aside-width-select">Aside Width:</label>
+                                <input type="range" name="aside-width" id="aside-width-select" min="100" max="600" value="{{ session.get("aside-width", 210) }}" oninput="this.nextElementSibling.value = this.value">
+                                <output>{{ session.get("aside-width", 210) }}</output>
                             </form>
                         </div>
                     </details>

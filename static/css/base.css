@@ -215,20 +215,24 @@ details.aside-menu[open] {
     top: 100%;
     right: 0;
     color: var(--body-color);
-    width: 260px;
-    height: auto;
+    resize: both;
+    overflow: auto;
+    min-width: 150px;
+    max-width: 600px;
+    direction: rtl;
     background-color: var(--body-background-color);
     border: 2px solid var(--body-color);
     padding: 15px;
     box-shadow: 0px 8px 16px rgba(0,0,0,0.3);
     border-radius: 4px;
-    font-size: 30px;
+    font-size: calc(var(--body-font-size) / 1.5);
 }
 
 .settings-panel form {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    direction: ltr;
 }
 
 summary {

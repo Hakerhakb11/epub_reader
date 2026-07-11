@@ -11,5 +11,8 @@ class Configuration(object):
     SECRET_KEY = 'cbc101e03f1e485f94e2ea47852dbd55ee7307f0af39ce534a62f202655270b2'
 
 # Command to create a single executable file using PyInstaller with the specified options and additional data files.
-
+# Windows
 # poetry run pyinstaller --noconfirm --onefile --windowed --add-data "templates;templates" --add-data "static;static" --add-data "home/templates;home/templates" --add-data "books/templates;books/templates" main.py
+
+# Linux
+# poetry run pyinstaller --noconfirm --onefile --windowed --add-data "templates:templates" --add-data "static:static" --add-data "home/templates:home/templates" --add-data "books/templates:books/templates" main.py

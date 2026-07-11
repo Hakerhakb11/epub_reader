@@ -5,7 +5,7 @@ description = "b file"
 authors = [
     {name = "Hakerhakb11",email = "igorshilov2007@gmail.com"}
 ]
-requires-python = ">=3.14"
+requires-python = ">=3.14,<3.16"
 dependencies = [
     "alembic (==1.18.4)",
     "beautifulsoup4 (==4.14.3)",
@@ -36,3 +36,8 @@ dependencies = [
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "pyinstaller (>=6.21.0,<7.0.0)"
+]

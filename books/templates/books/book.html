@@ -4,7 +4,7 @@
 
 {% block extra_head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/book.css') }}">
-    <script src="{{url_for('static', filename='js/book.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/book.js') }}" defer></script>
 {% endblock extra_head %}
 
 {% block aside %}
@@ -50,14 +50,14 @@
 
                         <button type="button" class "button dropdown-item edit-triger-btn" onclick="startEdit(this)">Edit</button>
                         
-                        <form action=" {{ url_for('books.delete_bookmark', book_id=bookmark.book_id, chapter_id=bookmark.chapter_id) }}" method="POST">
+                        <form action="{{ url_for('books.delete_bookmark', book_id=bookmark.book_id, chapter_id=bookmark.chapter_id) }}" method="POST">
                             <button type="submit" class="dropdown-item dropdown-delete-btn">Delete</button>
                         </form>
                     </div>
                 </details>
 
-                <form action="{{url_for('books.edit_bookmark', book_id=bookmark.book_id, chapter_id=bookmark.chapter_id)}}", method="POST" class="bookmark-edit-form">
-                    <input type="text" name="new_title" value="{{bookmark.title}}" class=bookmark-edit-input required autocomplete="off">
+                <form action="{{ url_for('books.edit_bookmark', book_id=bookmark.book_id, chapter_id=bookmark.chapter_id) }}", method="POST" class="bookmark-edit-form">
+                    <input type="text" name="new_title" value="{{bookmark.title}}" class="bookmark-edit-input" required autocomplete="off">
                     <span>
                         <button type="submit" class="save-edit-btn" title="Save">✓</button>
                         <button type="button" class="cancel-edit-btn" onclick="cancelEdit(this)" title="Cancel">✕</button>

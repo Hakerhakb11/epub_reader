@@ -13,7 +13,7 @@
         <style>
             :root {
                 --body-background-color: {{ session.get('bg-color', '#121212') }};
-                --body-color: {{ session.get('text-color', '#ffffff') }};
+                --body-color: {{ session.get('text-color', '#e0e0e0') }};
 
                 --block-content-width: {{ session.get('container-width', 60) }}%;
                 --body-font-size: {{ session.get('interface-font-size', 16) }}px;
@@ -68,11 +68,11 @@
                                 <div class="custom-colors">
                                     <div class="color-picker-wrapper">
                                         <label for="bg-picker">Background:</label>
-                                        <input type="color" id="bg-picker" value="{{ session.get('bg-color', '#121212') }}">
+                                        <input type="color" name="bg-color" id="bg-picker" value="{{ session.get('bg-color', '#121212') }}">
                                     </div>
                                     <div class="color-picker-wrapper">
                                         <label for="text-picker">Text:</label>
-                                        <input type="color" id="text-picker" value="{{ session.get('text-color', '#e0e0e0') }}">
+                                        <input type="color" name="text-color" id="text-picker" value="{{ session.get('text-color', '#e0e0e0') }}">
                                     </div>
                                 </div>
 

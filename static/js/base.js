@@ -17,11 +17,48 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Color settings
+    const form = document.querySelector('.settings-panel form');
     const bgHidden = document.getElementById('bg-color-hidden');
     const textHidden = document.getElementById('text-color-hidden');
     const bgPicker = document.getElementById('bg-picker');
     const textPicker = document.getElementById('text-picker');
     const presetButtons = document.querySelectorAll('.preset-btn');
+
+    const interfaceFontSizeInput = document.getElementById('interface-font-size-select');
+    const textFontSizeInput = document.getElementById('text-font-size-select');
+    const containerWidthInput = document.getElementById('container-width-select');
+    const asideWidthInput = document.getElementById('aside-width-select');
+
+    function saveSettingsToServer() {
+        if (!form) return;
+
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                console.error('Error. saveSettingsToServer failed:', response.statusText);
+            }
+        })
+        .catch(error => console.error('Network error:', error));
+    }
+
+    function updateColors(bgColor, textColor) {
+        document.documentElement.style.setProperty('--body-background-color', bgColor);
+        document.documentElement.style.setProperty('--body-color', textColor);
+
+        if (bgHidden) bgHidden.value = bgColor;
+        if (textHidden) textHidden.value = textColor;
+
+        if (bgPicker) bgPicker.value = bgColor;
+        if (textPicker) textPicker.value = textColor;
+    }
 
     presetButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -48,19 +85,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Font size and container width settings
-    const interfaceFontSizeInput = document.getElementById('interface-font-size-select')
-    const textFontSizeInput = document.getElementById('text-font-size-select');
-    const containerWidthInput = document.getElementById('container-width-select');
-    const asideWidthInput = document.getElementById('aside-width-select');
-
     if (interfaceFontSizeInput) {
         interfaceFontSizeInput.addEventListener('input', (event) => {
             const value = event.target.value;
             document.documentElement.style.setProperty('--body-font-size', `${value}px`);
-
-            interfaceFontSizeInput.nextElementSibling.value = value;
+            if (interfaceFontSizeInput.nextElementSibling) {
+                interfaceFontSizeInput.nextElementSibling.value = value;
+            }
         });
-
         interfaceFontSizeInput.addEventListener('change', saveSettingsToServer);
     }
 
@@ -68,10 +100,10 @@ document.addEventListener('DOMContentLoaded', () => {
         textFontSizeInput.addEventListener('input', (event) => {
             const value = event.target.value;
             document.documentElement.style.setProperty('--text-font-size', `${value}px`);
-            
-            textFontSizeInput.nextElementSibling.value = value;
+            if (textFontSizeInput.nextElementSibling) {
+                textFontSizeInput.nextElementSibling.value = value;
+            }
         });
-
         textFontSizeInput.addEventListener('change', saveSettingsToServer);
     }
 
@@ -79,10 +111,10 @@ document.addEventListener('DOMContentLoaded', () => {
         containerWidthInput.addEventListener('input', (event) => {
             const value = event.target.value;
             document.documentElement.style.setProperty('--block-content-width', `${value}%`);
-            
-            containerWidthInput.nextElementSibling.value = value;
+            if (containerWidthInput.nextElementSibling) {
+                containerWidthInput.nextElementSibling.value = value;
+            }
         });
-
         containerWidthInput.addEventListener('change', saveSettingsToServer);
     }
 
@@ -90,40 +122,10 @@ document.addEventListener('DOMContentLoaded', () => {
         asideWidthInput.addEventListener('input', (event) => {
             const value = event.target.value;
             document.documentElement.style.setProperty('--aside-width', `${value}px`);
-            
-            asideWidthInput.nextElementSibling.value = value;
+            if (asideWidthInput.nextElementSibling) {
+                asideWidthInput.nextElementSibling.value = value;
+            }
         });
-
         asideWidthInput.addEventListener('change', saveSettingsToServer);
     }
-
 });
-
-function saveSettingsToServer() {
-    const form = document.querySelector('.settings-panel form');
-    if (!form) return;
-
-    const formData = new FormData(form);
-
-    fetch(form.action, {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => {
-        if (!response.ok) {
-            console.error('Error. saveSettingsToServer failed:', response.statusText);
-        }
-    })
-    .catch(error => console.error('Network error:', error));
-}
-
-function updateColors(bgColor, textColor) {
-    document.documentElement.style.setProperty('--body-background-color', bgColor);
-    document.documentElement.style.setProperty('--body-color', textColor);
-
-    if (bgHidden) bgHidden.value = bgColor;
-    if (textHidden) textHidden.value = textColor;
-
-    if (bgPicker) bgPicker.value = bgColor;
-    if (textPicker) textPicker.value = textColor;
-}

@@ -50,6 +50,7 @@ def set_configuration():
     text_font_size = request.form.get('text-font-size', 16, type=int)
     container_width = request.form.get('container-width', 60, type=int)
     aside_width = request.form.get('aside-width', 210, type=int)
+    paragraph_spacing = request.form.get('paragraph-spacing', 15, type=int)
 
     new_config = {
         'bg-color': bg_color,
@@ -58,6 +59,7 @@ def set_configuration():
         'text-font-size': text_font_size,
         'container-width': container_width,
         'aside-width': aside_width,
+        'paragraph-spacing': paragraph_spacing
     }
 
     session['config'] = new_config
@@ -94,6 +96,7 @@ def load_config():
                 'text-font-size': 16,
                 'container-width': 60,
                 'aside-width': 210,
+                'paragraph-spacing': 15
             }
 
             session['config'] = default_config

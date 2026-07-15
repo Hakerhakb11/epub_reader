@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const textFontSizeInput = document.getElementById('text-font-size-select');
     const containerWidthInput = document.getElementById('container-width-select');
     const asideWidthInput = document.getElementById('aside-width-select');
+    const paragraphSpacingInput = document.getElementById('paragraph-spacing-select');
 
     function saveSettingsToServer() {
         if (!form) return;
@@ -128,4 +129,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         asideWidthInput.addEventListener('change', saveSettingsToServer);
     }
+
+    if (paragraphSpacingInput) {
+        paragraphSpacingInput.addEventListener('input', (event) => {
+            const value = event.target.value;
+            document.documentElement.style.setProperty('--paragraph-spacing', `${value}px`);
+            if (paragraphSpacingInput.nextElementSibling) {
+                paragraphSpacingInput.nextElementSibling.value = value;
+            }
+        });
+        paragraphSpacingInput.addEventListener('change', saveSettingsToServer);
+    }
+
 });

@@ -7,11 +7,10 @@ body.resizing-active button {
     pointer-events: none !important;
 }
 
-.paragraph {
+.output p {
     width: 100%;
     height: auto;
-    margin: 0;
-    padding: 4px;
+    padding: var(--paragraph-spacing) 20px;
     background-color: color-mix(in srgb, var(--body-color) 10%, transparent);
     color: var(--body-color);
 }

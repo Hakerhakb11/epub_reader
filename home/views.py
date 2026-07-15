@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 
-from models import Book, db
+from models import Book, Config, db
 from utils.text_helpers import add_epub_file, words_count
 
 home = Blueprint('home', __name__, template_folder='templates')
@@ -46,28 +46,29 @@ def delete_book(book_id):
 def set_configuration():
     bg_color = request.form.get('bg-color', '#121212')
     text_color = request.form.get('text-color', '#e0e0e0')
-    interface_font_size = request.form.get('interface-font-size', 16)
-    text_font_size = request.form.get('text-font-size', 16)
-    container_width = request.form.get('container-width', 60)
-    aside_width = request.form.get('aside-width', 210)
+    interface_font_size = request.form.get('interface-font-size', 16, type=int)
+    text_font_size = request.form.get('text-font-size', 16, type=int)
+    container_width = request.form.get('container-width', 60, type=int)
+    aside_width = request.form.get('aside-width', 210, type=int)
 
-    if session.get('bg-color') != bg_color:
-        session['bg-color'] = bg_color
+    new_config = {
+        'bg-color': bg_color,
+        'text-color': text_color,
+        'interface-font-size': interface_font_size,
+        'text-font-size': text_font_size,
+        'container-width': container_width,
+        'aside-width': aside_width,
+    }
 
-    if session.get('text-color') != text_color:
-        session['text-color'] = text_color
+    session['config'] = new_config
 
-    if session.get('interface-font-size') != interface_font_size:
-        session['interface-font-size'] = interface_font_size
-
-    if session.get('text-font-size') != text_font_size:
-        session['text-font-size'] = text_font_size
-
-    if session.get('container-width') != container_width:
-        session['container-width'] = container_width
-
-    if session.get('aside-width') != aside_width:
-        session['aside-width'] = aside_width
+    config = db.session.scalar(db.select(Config).order_by(Config.id.desc()))
+    if config:
+        config.config_json = new_config
+    else:
+        config = Config(config_json=new_config)
+        db.session.add(config)
+    db.session.commit()
 
     if (
         request.headers.get('X-Requested-With') == 'XMLHttpRequest'
@@ -77,3 +78,25 @@ def set_configuration():
         return {'status': 'success'}, 200
 
     return redirect(request.referrer or url_for('home.index'))
+
+
+@home.before_app_request
+def load_config():
+    if 'config' not in session:
+        config = db.session.scalar(db.select(Config).order_by(Config.id.desc()))
+        if config:
+            session['config'] = config.config_json
+        else:
+            default_config = {
+                'bg-color': '#121212',
+                'text-color': '#e0e0e0',
+                'interface-font-size': 16,
+                'text-font-size': 16,
+                'container-width': 60,
+                'aside-width': 210,
+            }
+
+            session['config'] = default_config
+
+            db.session.add(Config(config_json=default_config))
+            db.session.commit()

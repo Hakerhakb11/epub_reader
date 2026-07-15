@@ -35,13 +35,13 @@ def add_epub_file(user_file):
             for index, item_spine in enumerate(spine):
                 item_id = item_spine[0]
                 file = efile.get_item_with_id(item_id)
-                raw_content = file.get_content()
-                soup = BeautifulSoup(raw_content, 'xml')
-                title = file.get_name().replace('Text/', '').replace('.xhtml', '')
+                title = file.get_name().rsplit('/', 1)[-1].replace('.xhtml', '')
+
+                soup = clear_chapters(file)
 
                 chapter = Chapter(
                     title=title,
-                    content=str(soup.prettify()),
+                    content=str(soup),
                     order_number=index,
                     book=new_book,
                 )
@@ -63,3 +63,32 @@ def add_epub_file(user_file):
         info = "Incorrect file type need '.epub'"
         logging.error(info)
         return info
+
+
+def clear_chapters(file):
+    raw_content = file.get_content()
+    soup = BeautifulSoup(raw_content, 'xml')
+
+    tags_to_clean = [
+        'p',
+        'h1',
+        'h2',
+        'h3',
+        'h4',
+        'span',
+        'div',
+        'ol',
+        'ul',
+        'li',
+        'section',
+    ]
+
+    for tag in soup.find_all(tags_to_clean):
+        tag.attrs.pop('class', None)
+        tag.attrs.pop('style', None)
+        tag.attrs.pop('id', None)
+
+    if soup.body:
+        return ''.join(str(child) for child in soup.body.children)
+
+    return str(soup)

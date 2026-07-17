@@ -1,4 +1,94 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+    const outputDiv = document.querySelector('.output');
+    const menu = document.getElementById('customContextMenu');
+    const paragraphIdInput = document.getElementById('paragraphId');
+
+    if (outputDiv && menu) {
+        outputDiv.addEventListener('contextmenu', (event) => {
+            const paragraph = event.target.closest('p');
+
+            if (paragraph && outputDiv.contains(paragraph)) {
+                event.preventDefault();
+
+                if (paragraphIdInput) {
+                    paragraphIdInput.value = paragraph.id;
+                }
+
+                document.querySelectorAll('.output p.selected').forEach(p => {
+                    p.classList.remove('selected');
+                });
+
+                paragraph.classList.add('selected');
+
+                const x = event.clientX;
+                const y = event.clientY;
+
+                menu.style.display = 'block';
+                menu.style.left = `${x}px`;
+                menu.style.top = `${y}px`;
+            }
+        });
+
+        const bookmarkForms = document.querySelectorAll('.bookmark-form');
+        if (bookmarkForms) {
+
+            bookmarkForms.forEach(form => {
+                form.addEventListener('submit', (event) => {
+                    event.preventDefault(); 
+
+                    const formData = new FormData(form);
+
+                    fetch(form.action, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Ошибка сервера');
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.status === 'success') {
+                            console.log('Закладка успешно сохранена на абзац:', data.paragraph_id);
+                            
+                            if (menu.contains(form)) {
+                                menu.style.display = 'none';
+                            }
+
+                            const activeParagraph = document.getElementById(`p-${data.paragraph_id}`);
+                            if (activeParagraph) {
+                                document.querySelectorAll('.output p.has-bookmark').forEach(p => {
+                                    p.classList.remove('has-bookmark');
+                                });
+                                activeParagraph.classList.add('has-bookmark');
+                            }
+
+                            document.querySelectorAll('.output p.selected').forEach(p => {
+                                p.classList.remove('selected');
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Ошибка сохранения:', error);
+                        alert('Не удалось сохранить закладку');
+                    });
+                });
+            });
+        }
+
+        document.addEventListener('click', (event) => {
+            if (!menu.contains(event.target)) {
+                menu.style.display = 'none';
+                
+                if (!event.target.closest('.output p')) {
+                    document.querySelectorAll('.output p.selected').forEach(p => {
+                        p.classList.remove('selected');
+                    });
+                }
+            }
+        });
+    }
+
     const divider = document.getElementById('sidebarDivider');
     const bookmarksPanel = document.getElementById('bookmarksPanel');
     const toggleBtn = document.getElementById('toggleBookmarksBtn');

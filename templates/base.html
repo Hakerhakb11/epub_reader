@@ -91,6 +91,8 @@
                                 <label for="aside-width-select">Aside Width:</label>
                                 <input type="range" name="aside-width" id="aside-width-select" min="100" max="600" value="{{ session.get('config', {}).get("aside-width", 210) }}" oninput="this.nextElementSibling.value = this.value">
                                 <output>{{ session.get('config', {}).get("aside-width", 210) }}</output>
+                            
+                                {% block settings %}{% endblock settings %}
                             </form>
                         </div>
                     </details>

@@ -10,9 +10,15 @@ body.resizing-active button {
 .output p {
     width: 100%;
     height: auto;
+    margin: 0px;
     padding: var(--paragraph-spacing) 20px;
+    text-indent: 20px;
+    transition: background-color 0.1s ease;
+}
+
+.output p.selected {
     background-color: color-mix(in srgb, var(--body-color) 10%, transparent);
-    color: var(--body-color);
+    outline: none;
 }
 
 .bookmark-form {

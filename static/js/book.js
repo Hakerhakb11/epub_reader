@@ -1,4 +1,39 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+    const outputDiv = document.querySelector('.output');
+
+    if (outputDiv) {
+        outputDiv.addEventListener('contextmenu', (event) => {
+            const paragraph = event.target.closest('p');
+
+            if (paragraph && outputDiv.contains(paragraph)) {
+                event.preventDefault();
+
+                document.querySelectorAll('.output p.selected').forEach(p => {
+                    p.classList.remove('selected');
+                });
+
+                paragraph.classList.add('selected');
+
+                const x = event.clientX;
+                const y = event.clientY;
+
+                console.log(`Клик по абзацу: ${paragraph.id}`);
+                console.log(`Координаты меню X: ${x}px, Y: ${y}px`);
+
+                // showMyCustomMenu(x, y, paragraph.id);
+            }
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!event.target.closest('.output p')) {
+                document.querySelectorAll('.output p.selected').forEach(p => {
+                    p.classList.remove('selected');
+                });
+            }
+        });
+    }
+
     const divider = document.getElementById('sidebarDivider');
     const bookmarksPanel = document.getElementById('bookmarksPanel');
     const toggleBtn = document.getElementById('toggleBookmarksBtn');

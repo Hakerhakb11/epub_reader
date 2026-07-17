@@ -92,6 +92,7 @@
     {% endif %}
 
     <form method="POST" class="bookmark-form" action="{{ url_for('books.set_bookmark', book_id=book.id, chapter_id=chapter.order_number) }}">
+        <input type="hidden" name="paragraph-id" value="p-0">
         <button type="submit" class="button button-mark">SetMark</button>
     </form>
 
@@ -138,6 +139,7 @@
 
     <div id="customContextMenu" class="custom-context-menu">
         <form method="POST" class="bookmark-form" action="{{ url_for('books.set_bookmark', book_id=book.id, chapter_id=chapter.order_number) }}">
+            <input type="hidden" name="paragraph-id" id="paragraphId" value="">
             <button type="submit" class="button button-mark">SetMark</button>
         </form>
     </div>

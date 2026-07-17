@@ -88,6 +88,9 @@ def clear_chapters(file):
         tag.attrs.pop('style', None)
         tag.attrs.pop('id', None)
 
+    for index, p_tag in enumerate(soup.find_all('p')):
+        p_tag['id'] = f'p-{index}'
+
     if soup.body:
         return ''.join(str(child) for child in soup.body.children)
 

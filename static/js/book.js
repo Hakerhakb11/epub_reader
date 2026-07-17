@@ -1,6 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     const outputDiv = document.querySelector('.output');
+    const menu = document.getElementById('customContextMenu');
+
+    let selectedParagraphId = null;
 
     if (outputDiv) {
         outputDiv.addEventListener('contextmenu', (event) => {
@@ -9,7 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (paragraph && outputDiv.contains(paragraph)) {
                 event.preventDefault();
 
+                selectedParagraphId = paragraph.id;
+
                 document.querySelectorAll('.output p.selected').forEach(p => {
+                    menu.style.display = 'none';
                     p.classList.remove('selected');
                 });
 
@@ -20,6 +26,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 console.log(`Клик по абзацу: ${paragraph.id}`);
                 console.log(`Координаты меню X: ${x}px, Y: ${y}px`);
+
+                menu.style.display = 'block';
+                menu.style.left = `${x}px`;
+                menu.style.top = `${y}px`;
+
+                document.addEventListener('click', (event) => {
+                    if (!menu.contains(event.target)) {
+                        menu.style.display = 'none';
+                        document.querySelectorAll('.output p.selected').forEach(p => p.classList.remove('selected'));
+                    }
+                })
 
                 // showMyCustomMenu(x, y, paragraph.id);
             }

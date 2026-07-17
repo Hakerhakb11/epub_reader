@@ -136,4 +136,10 @@
     ```
     {% endif %}
 
+    <div id="customContextMenu" class="custom-context-menu">
+        <form method="POST" class="bookmark-form" action="{{ url_for('books.set_bookmark', book_id=book.id, chapter_id=chapter.order_number) }}">
+            <button type="submit" class="button button-mark">SetMark</button>
+        </form>
+    </div>
+
 {% endblock body %}

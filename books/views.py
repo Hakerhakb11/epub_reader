@@ -43,21 +43,17 @@ def set_bookmark(book_id, chapter_id):
 
     paragraph_id = int(request.form.get('paragraph-id', '0').replace('p-', ''))
 
-    new_mark = Bookmark.query.filter_by(
-        book_id=book_id, chapter_id=chapter_id).first()
-    if not new_mark:
-        title = db.session.scalar(
-            db.select(Chapter).filter_by(
-                book_id=book_id, order_number=chapter_id)
-        ).title
-        new_mark = Bookmark(title=title, book_id=book_id,
-                            chapter_id=chapter_id, paragraph_id=paragraph_id)
-        db.session.add(new_mark)
-        db.session.commit()
+    chapter = db.session.scalar(
+        db.select(Chapter).filter_by(
+            book_id=book_id, order_number=chapter_id)
+    )
+    if chapter.bookmark:
+        chapter.bookmark.paragraph_id = paragraph_id
     else:
-        new_mark.paragraph_id = paragraph_id
-        db.session.commit()
+        chapter.bookmark = Bookmark(title=chapter.title, book_id=book_id,
+                            chapter_id=chapter_id, paragraph_id=paragraph_id)
 
+    db.session.commit()
     return {
         'status': 'success',
         'paragraph_id': paragraph_id

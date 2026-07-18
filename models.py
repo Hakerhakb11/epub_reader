@@ -31,7 +31,6 @@ class Bookmark(db.Model):
     title = db.Column(db.String(255))
     book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
     chapter_id = db.Column(db.Integer, db.ForeignKey('chapters.id'), nullable=False)
-    paragraph_id = db.Column(db.Integer, nullable=True)
 
 
 class Config(db.Model):

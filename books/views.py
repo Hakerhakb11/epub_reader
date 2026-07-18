@@ -1,4 +1,6 @@
-from flask import Blueprint, redirect, render_template, request, url_for
+import logging
+
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 
 from models import Book, Bookmark, Chapter, db
 from utils.text_helpers import words_count
@@ -38,30 +40,28 @@ def book_view(book_id, chapter_id=0):
     )
 
 
-@books.route('/book/<int:book_id>/<int:chapter_id>', methods=['POST'])
+@books.route('/book/<int:book_id>/<int:chapter_id>', methods=['GET', 'POST'])
 def set_bookmark(book_id, chapter_id):
 
-    paragraph_id = int(request.form.get('paragraph-id', '0').replace('p-', ''))
-
-    new_mark = Bookmark.query.filter_by(
-        book_id=book_id, chapter_id=chapter_id).first()
+    new_mark = Bookmark.query.filter_by(book_id=book_id, chapter_id=chapter_id).first()
     if not new_mark:
         title = db.session.scalar(
-            db.select(Chapter).filter_by(
-                book_id=book_id, order_number=chapter_id)
+            db.select(Chapter).filter_by(book_id=book_id, order_number=chapter_id)
         ).title
-        new_mark = Bookmark(title=title, book_id=book_id,
-                            chapter_id=chapter_id, paragraph_id=paragraph_id)
+        print(title, 'title')
+        new_mark = Bookmark(title=title, book_id=book_id, chapter_id=chapter_id)
         db.session.add(new_mark)
         db.session.commit()
+        flash('Bookmark added succesfully')
     else:
-        new_mark.paragraph_id = paragraph_id
-        db.session.commit()
+        info = 'Bookmark already exist'
+        flash(info)
+        logging.info(info)
+        return redirect(
+            url_for('books.book_view', book_id=book_id, chapter_id=chapter_id)
+        )
 
-    return {
-        'status': 'success',
-        'paragraph_id': paragraph_id
-    }, 200
+    return redirect(url_for('books.book_view', book_id=book_id, chapter_id=chapter_id))
 
 
 @books.route('/book/<int:book_id>/<int:chapter_id>/delete_bookmark', methods=['POST'])

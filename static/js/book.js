@@ -5,6 +5,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const paragraphIdInput = document.getElementById('paragraphId');
 
     if (outputDiv && menu) {
+        const activeParagraphId = outputDiv.dataset.activeBookmark;
+        
+        if (activeParagraphId && activeParagraphId !== '') {
+            const bookmarkedP = document.getElementById(`p-${activeParagraphId}`);
+            if (bookmarkedP) {
+                bookmarkedP.classList.add('has-bookmark');
+                
+                bookmarkedP.scrollIntoView({ block: 'center' });
+            }
+        }
         outputDiv.addEventListener('contextmenu', (event) => {
             const paragraph = event.target.closest('p');
 

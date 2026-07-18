@@ -44,8 +44,8 @@
 
         {% for bookmark in bookmarks %}
             <div class="aside-item">
-                <a href="{{ url_for('books.book_view', book_id=bookmark.book_id, chapter_id=bookmark.chapter_id) }}"
-                class="aside-link {% if bookmark.chapter_id == chapter.order_number %}active{% endif %}"
+                <a href="{{ url_for('books.book_view', book_id=bookmark.book_id, chapter_id=bookmark.chapter.order_number) }}"
+                class="aside-link {% if bookmark.chapter.order_number == chapter.order_number %}active{% endif %}"
                 title="{{bookmark.title}}">
                     {{ bookmark.title }}
                 </a>
@@ -131,7 +131,7 @@
 
     {% if text %}
         <p style="font-size: 16px; color: #888;">Words count: {{ words_count }}</p>
-        <div class="output">
+        <div class="output" data-active-bookmark="{{ chapter.bookmark.paragraph_id if chapter.bookmark else '' }}">
             {{ text | safe }}
         </div>
     ```

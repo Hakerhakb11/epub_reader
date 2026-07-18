@@ -235,6 +235,14 @@ details.aside-menu[open] {
     direction: ltr;
 }
 
+.custom-context-menu {
+    position: fixed;
+    background-color: var(--body-background-color);
+    border: 1px solid var(--body-color);
+    z-index: 10000;
+    display: none;
+}
+
 summary {
     list-style: none;
     cursor: pointer;

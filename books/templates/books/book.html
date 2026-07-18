@@ -7,6 +7,12 @@
     <script src="{{ url_for('static', filename='js/book.js') }}" defer></script>
 {% endblock extra_head %}
 
+{% block style %}
+    :root {
+        --paragraph-spacing: {{ session.get('config', {}).get("paragraph-spacing", 15) }}px;
+    }
+{% endblock style %}
+
 {% block aside %}
     <div class="chapters">
         {% for ch in book.chapters.order_by('order_number') %}
@@ -38,8 +44,8 @@
 
         {% for bookmark in bookmarks %}
             <div class="aside-item">
-                <a href="{{ url_for('books.book_view', book_id=bookmark.book_id, chapter_id=bookmark.chapter_id) }}"
-                class="aside-link {% if bookmark.chapter_id == chapter.order_number %}active{% endif %}"
+                <a href="{{ url_for('books.book_view', book_id=bookmark.book_id, chapter_id=bookmark.chapter.order_number) }}"
+                class="aside-link {% if bookmark.chapter.order_number == chapter.order_number %}active{% endif %}"
                 title="{{bookmark.title}}">
                     {{ bookmark.title }}
                 </a>
@@ -86,6 +92,7 @@
     {% endif %}
 
     <form method="POST" class="bookmark-form" action="{{ url_for('books.set_bookmark', book_id=book.id, chapter_id=chapter.order_number) }}">
+        <input type="hidden" name="paragraph-id" value="p-0">
         <button type="submit" class="button button-mark">SetMark</button>
     </form>
 
@@ -104,6 +111,12 @@
     {% endif %}
 {% endblock top_bar %}
 
+{% block settings %}
+    <label for="paragraph-spacing-select">Paragraph spacing:</label>
+    <input type="range" name="paragraph-spacing" id="paragraph-spacing-select" min="0" max="50" value="{{ session.get('config', {}).get("paragraph-spacing", 15) }}" oninput="this.nextElementSibling.value = this.value">
+    <output>{{ session.get('config', {}).get("paragraph-spacing", 15) }}</output>
+{% endblock settings %}
+
 {% block body %}
 
     {% with messages = get_flashed_messages() %}
@@ -118,12 +131,17 @@
 
     {% if text %}
         <p style="font-size: 16px; color: #888;">Words count: {{ words_count }}</p>
-        <div class="output">
-            <p>
-                {{ text | safe }}
-            </p>
+        <div class="output" data-active-bookmark="{{ chapter.bookmark.paragraph_id if chapter.bookmark else '' }}">
+            {{ text | safe }}
         </div>
     ```
     {% endif %}
+
+    <div id="customContextMenu" class="custom-context-menu">
+        <form method="POST" class="bookmark-form" action="{{ url_for('books.set_bookmark', book_id=book.id, chapter_id=chapter.order_number) }}">
+            <input type="hidden" name="paragraph-id" id="paragraphId" value="">
+            <button type="submit" class="button button-mark">SetMark</button>
+        </form>
+    </div>
 
 {% endblock body %}

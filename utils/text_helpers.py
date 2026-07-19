@@ -35,7 +35,8 @@ def add_epub_file(user_file):
             for index, item_spine in enumerate(spine):
                 item_id = item_spine[0]
                 file = efile.get_item_with_id(item_id)
-                title = file.get_name().rsplit('/', 1)[-1].replace('.xhtml', '')
+                title = file.get_name().rsplit(
+                    '/', 1)[-1].replace('.xhtml', '')
 
                 soup = clear_chapters(file)
 

@@ -50,7 +50,7 @@ aside {
     overflow: hidden;
 }
 
-/* > говорит чтобы только главный элемент учитывался */
+/* > It specifies that only the main element should be taken into account. */
 aside:has(> details:not([open])) {
     width: 60px;
 }
@@ -190,8 +190,8 @@ details.aside-menu[open] {
     padding: 10px 20px;
     box-sizing: border-box;
     transition: transform 0.3s ease-in-out;
-    /* transform: translateY(-100%); --------------- COMMENT FOR DEBUG */
-    /* animation: showPanelOnLoad 4.5s ease-in-out;  COMMENT FOR DEBUG */
+    transform: translateY(-100%);
+    animation: showPanelOnLoad 4.5s ease-in-out;
     z-index: 1000;
 }
 
@@ -227,7 +227,7 @@ details.aside-menu[open] {
     background-color: var(--body-background-color);
     border: 2px solid var(--body-color);
     padding: 15px;
-    box-shadow: 0px 8px 16px rgba(0,0,0,0.3);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
     border-radius: 4px;
     font-size: calc(var(--body-font-size) / 1.5);
 }
@@ -319,9 +319,11 @@ svg {
     0% {
         transform: translateY(0);
     }
+
     75% {
         transform: translateY(0);
     }
+
     100% {
         transform: translateY(-100%);
     }

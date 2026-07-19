@@ -76,7 +76,7 @@
                                 {% set current_font = session.get('config', {}).get('font-family', 'default') %}
                                 <label for="font-family-select">Select Font:</label>
                                 <select name="font-family" id="font-family-select" onchange="changeFont(this.value)">
-                                    <option value="default" {% if current_font == 'default' %}selected{% endif %}>По умолчанию</option>
+                                    <option value="default" {% if current_font == 'default' %}selected{% endif %}>Default</option>
                                     <option value="Georgia" {% if current_font == 'Georgia' %}selected{% endif %}>Georgia</option>
                                     <option value="Times New Roman" {% if current_font == 'Times New Roman' %}selected{% endif %}>Times New Roman</option>
                                     <option value="Noto Sans" {% if current_font == 'Noto Sans' %}selected{% endif %}>Noto Sans</option>

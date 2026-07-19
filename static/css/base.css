@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Noto+Sans&family=Oswald&family=Roboto&display=swap');
+
 :root {
     --block-content-width: 60%;
     --body-background-color: black;
     --body-color: white;
     --body-font-size: 25px;
     --text-font-size: 16px;
+    --text-font-family: 'Georgia', serif;
 }
 
 body {
@@ -34,6 +37,7 @@ main {
     width: 100%;
     max-width: var(--block-content-width);
     font-size: var(--text-font-size);
+    font-family: var(--text-font-family);
     transition: max-width 0.3s ease;
 }
 

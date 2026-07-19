@@ -46,6 +46,7 @@ def delete_book(book_id):
 def set_configuration():
     bg_color = request.form.get('bg-color', '#121212')
     text_color = request.form.get('text-color', '#e0e0e0')
+    font_family = request.form.get('font-family', 'default')
     interface_font_size = request.form.get('interface-font-size', 16, type=int)
     text_font_size = request.form.get('text-font-size', 16, type=int)
     container_width = request.form.get('container-width', 60, type=int)
@@ -55,6 +56,7 @@ def set_configuration():
     new_config = {
         'bg-color': bg_color,
         'text-color': text_color,
+        'font-family': font_family,
         'interface-font-size': interface_font_size,
         'text-font-size': text_font_size,
         'container-width': container_width,
@@ -92,6 +94,7 @@ def load_config():
             default_config = {
                 'bg-color': '#121212',
                 'text-color': '#e0e0e0',
+                'font-family': 'default',
                 'interface-font-size': 16,
                 'text-font-size': 16,
                 'container-width': 60,

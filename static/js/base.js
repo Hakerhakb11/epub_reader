@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         fontFamilySelectInput.addEventListener('change', saveSettingsToServer);
     }
-
+    
     if (interfaceFontSizeInput) {
         interfaceFontSizeInput.addEventListener('input', (event) => {
             const value = event.target.value;
@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function safeBack(fallbackUrl = '/') {
     let depth = parseInt(sessionStorage.getItem("app_depth")) || 1;
 
-    if (depth <= 1) return;
+    if (depth <= 1) return; 
 
     sessionStorage.setItem("app_depth", depth - 2);
     history.back();

@@ -59,12 +59,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 'X-Requested-With': 'XMLHttpRequest'
             }
         })
-        .then(response => {
-            if (!response.ok) {
-                console.error('Error. saveSettingsToServer failed:', response.statusText);
-            }
-        })
-        .catch(error => console.error('Network error:', error));
+            .then(response => {
+                if (!response.ok) {
+                    console.error('Error. saveSettingsToServer failed:', response.statusText);
+                }
+            })
+            .catch(error => console.error('Network error:', error));
     }
 
     function updateColors(bgColor, textColor) {
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('click', () => {
             const bg = button.getAttribute('data-bg');
             const text = button.getAttribute('data-text');
-            
+
             updateColors(bg, text);
             saveSettingsToServer();
         });

@@ -8,7 +8,6 @@ home = Blueprint('home', __name__, template_folder='templates')
 
 @home.route('/', methods=['GET', 'POST'])
 def index():
-    print('CHECK: ', session.get('theme'))
     user_text = ''
     count = 0
     if request.method == 'POST':
@@ -74,20 +73,14 @@ def set_configuration():
         db.session.add(config)
     db.session.commit()
 
-    if (
-        request.headers.get('X-Requested-With') == 'XMLHttpRequest'
-        or request.is_json
-        or 'fetch' in request.headers.get('User-Agent', '').lower()
-    ):
-        return {'status': 'success'}, 200
-
-    return redirect(request.referrer or url_for('home.index'))
+    return {'status': 'success'}, 200
 
 
 @home.before_app_request
 def load_config():
     if 'config' not in session:
-        config = db.session.scalar(db.select(Config).order_by(Config.id.desc()))
+        config = db.session.scalar(
+            db.select(Config).order_by(Config.id.desc()))
         if config:
             session['config'] = config.config_json
         else:

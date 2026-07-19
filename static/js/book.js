@@ -6,12 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (outputDiv && menu) {
         const activeParagraphId = outputDiv.dataset.activeBookmark;
-        
+
         if (activeParagraphId && activeParagraphId !== '') {
             const bookmarkedP = document.getElementById(`p-${activeParagraphId}`);
             if (bookmarkedP) {
                 bookmarkedP.classList.add('has-bookmark');
-                
+
                 bookmarkedP.scrollIntoView({ block: 'center' });
             }
         }
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             bookmarkForms.forEach(form => {
                 form.addEventListener('submit', (event) => {
-                    event.preventDefault(); 
+                    event.preventDefault();
 
                     const formData = new FormData(form);
 
@@ -53,35 +53,35 @@ document.addEventListener('DOMContentLoaded', () => {
                         method: 'POST',
                         body: formData
                     })
-                    .then(response => {
-                        if (!response.ok) throw new Error('Ошибка сервера');
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (data.status === 'success') {
-                            console.log('Закладка успешно сохранена на абзац:', data.paragraph_id);
-                            
-                            if (menu.contains(form)) {
-                                menu.style.display = 'none';
-                            }
+                        .then(response => {
+                            if (!response.ok) throw new Error('Ошибка сервера');
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.status === 'success') {
+                                console.log('Закладка успешно сохранена на абзац:', data.paragraph_id);
 
-                            const activeParagraph = document.getElementById(`p-${data.paragraph_id}`);
-                            if (activeParagraph) {
-                                document.querySelectorAll('.output p.has-bookmark').forEach(p => {
-                                    p.classList.remove('has-bookmark');
+                                if (menu.contains(form)) {
+                                    menu.style.display = 'none';
+                                }
+
+                                const activeParagraph = document.getElementById(`p-${data.paragraph_id}`);
+                                if (activeParagraph) {
+                                    document.querySelectorAll('.output p.has-bookmark').forEach(p => {
+                                        p.classList.remove('has-bookmark');
+                                    });
+                                    activeParagraph.classList.add('has-bookmark');
+                                }
+
+                                document.querySelectorAll('.output p.selected').forEach(p => {
+                                    p.classList.remove('selected');
                                 });
-                                activeParagraph.classList.add('has-bookmark');
                             }
-
-                            document.querySelectorAll('.output p.selected').forEach(p => {
-                                p.classList.remove('selected');
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Ошибка сохранения:', error);
-                        alert('Не удалось сохранить закладку');
-                    });
+                        })
+                        .catch(error => {
+                            console.error('Ошибка сохранения:', error);
+                            alert('Не удалось сохранить закладку');
+                        });
                 });
             });
         }
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('click', (event) => {
             if (!menu.contains(event.target)) {
                 menu.style.display = 'none';
-                
+
                 if (!event.target.closest('.output p')) {
                     document.querySelectorAll('.output p.selected').forEach(p => {
                         p.classList.remove('selected');

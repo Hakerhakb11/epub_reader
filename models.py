@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+
 class Book(db.Model):
     __tablename__ = 'books'
     id = db.Column(db.Integer, primary_key=True)
@@ -23,7 +24,8 @@ class Chapter(db.Model):
     order_number = db.Column(db.Integer)
 
     book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
-    bookmark = db.relationship('Bookmark', backref='chapter', uselist=False, cascade="all, delete-orphan")
+    bookmark = db.relationship(
+        'Bookmark', backref='chapter', uselist=False, cascade="all, delete-orphan")
 
 
 class Bookmark(db.Model):
@@ -32,7 +34,8 @@ class Bookmark(db.Model):
     title = db.Column(db.String(255))
     paragraph_id = db.Column(db.Integer, nullable=False)
     book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
-    chapter_id = db.Column(db.Integer, db.ForeignKey('chapters.id'), nullable=False)
+    chapter_id = db.Column(db.Integer, db.ForeignKey(
+        'chapters.id'), nullable=False)
 
 
 class Config(db.Model):

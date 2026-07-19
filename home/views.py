@@ -87,7 +87,8 @@ def set_configuration():
 @home.before_app_request
 def load_config():
     if 'config' not in session:
-        config = db.session.scalar(db.select(Config).order_by(Config.id.desc()))
+        config = db.session.scalar(
+            db.select(Config).order_by(Config.id.desc()))
         if config:
             session['config'] = config.config_json
         else:

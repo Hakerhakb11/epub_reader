@@ -1,4 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+    // Back button
+    let depth = parseInt(sessionStorage.getItem("app_depth")) || 0;
+    depth++;
+    sessionStorage.setItem("app_depth", depth);
+
+    const backButton = document.getElementById('button-btn');
+
+    if (backButton) {
+        if (depth <= 1) {
+            backButton.classList.add("disabled");
+        } else {
+            backButton.classList.remove("disabled");
+        }
+    }
+
     // Sidebar state
     const sidebar = document.getElementById('mainSidebar');
 
@@ -142,3 +158,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
+function safeBack(fallbackUrl = '/') {
+    let depth = parseInt(sessionStorage.getItem("app_depth")) || 1;
+
+    if (depth <= 1) return; 
+
+    sessionStorage.setItem("app_depth", depth - 2);
+    history.back();
+}

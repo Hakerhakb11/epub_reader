@@ -1,4 +1,5 @@
 from livereload import Server
+from utils.server_helpers import get_port
 
 from app import app, db
 
@@ -9,4 +10,5 @@ if __name__ == '__main__':
     server = Server(app.wsgi_app)
     server.watch('templates/')
     server.watch('static/')
-    server.serve(port=5000)
+    port = get_port(5000)
+    server.serve(port)

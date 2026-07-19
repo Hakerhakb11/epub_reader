@@ -15,6 +15,7 @@
                 --body-background-color: {{ session.get('config', {}).get('bg-color', '#121212') }};
                 --body-color: {{ session.get('config', {}).get('text-color', '#e0e0e0') }};
 
+                --text-font-family: {{ session.get('config', {}).get('font-family', 'default') }};
                 --block-content-width: {{ session.get('config', {}).get('container-width', 60) }}%;
                 --body-font-size: {{ session.get('config', {}).get('interface-font-size', 16) }}px;
                 --text-font-size: {{ session.get('config', {}).get('text-font-size', 16) }}px;
@@ -75,6 +76,19 @@
                                         <input type="color" name="text-color" id="text-picker" value="{{ session.get('config', {}).get('text-color', '#e0e0e0') }}">
                                     </div>
                                 </div>
+
+                                {% set current_font = session.get('config', {}).get('font-family', 'default') %}
+                                <label for="font-family-select">Select Font:</label>
+                                <select name="font-family" id="font-family-select" onchange="changeFont(this.value)">
+                                    <option value="default" {% if current_font == 'default' %}selected{% endif %}>По умолчанию</option>
+                                    <option value="Georgia" {% if current_font == 'Georgia' %}selected{% endif %}>Georgia</option>
+                                    <option value="Times New Roman" {% if current_font == 'Times New Roman' %}selected{% endif %}>Times New Roman</option>
+                                    <option value="Noto Sans" {% if current_font == 'Noto Sans' %}selected{% endif %}>Noto Sans</option>
+                                    <option value="Arial" {% if current_font == 'Arial' %}selected{% endif %}>Arial</option>
+                                    <option value="Montserrat" {% if current_font == 'Montserrat' %}selected{% endif %}>Montserrat</option>
+                                    <option value="Roboto" {% if current_font == 'Roboto' %}selected{% endif %}>Roboto</option>
+                                    <option value="Oswald" {% if current_font == 'Oswald' %}selected{% endif %}>Oswald</option>
+                                </select>
 
                                 <label for="text-font-size-select">Text Font Size:</label>
                                 <input type="range" name="text-font-size" id="text-font-size-select" min="10" max="50" value="{{ session.get('config', {}).get("text-font-size", 16) }}" oninput="this.nextElementSibling.value = this.value">

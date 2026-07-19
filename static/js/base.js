@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const textPicker = document.getElementById('text-picker');
     const presetButtons = document.querySelectorAll('.preset-btn');
 
+    const fontFamilySelectInput = document.getElementById('font-family-select');
     const interfaceFontSizeInput = document.getElementById('interface-font-size-select');
     const textFontSizeInput = document.getElementById('text-font-size-select');
     const containerWidthInput = document.getElementById('container-width-select');
@@ -85,7 +86,18 @@ document.addEventListener('DOMContentLoaded', () => {
         textPicker.addEventListener('change', saveSettingsToServer);
     }
 
-    // Font size and container width settings
+    // Font, size, width settings
+    if (fontFamilySelectInput) {
+        fontFamilySelectInput.addEventListener('input', (event) => {
+            const value = event.target.value;
+            document.documentElement.style.setProperty('--text-font-family', `${value}`);
+            if (fontFamilySelectInput.nextElementSibling) {
+                fontFamilySelectInput.nextElementSibling.value = value;
+            }
+        });
+        fontFamilySelectInput.addEventListener('change', saveSettingsToServer);
+    }
+    
     if (interfaceFontSizeInput) {
         interfaceFontSizeInput.addEventListener('input', (event) => {
             const value = event.target.value;

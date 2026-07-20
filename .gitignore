@@ -5,3 +5,4 @@ library.db
 main.spec
 dist
 build
+.buildozer

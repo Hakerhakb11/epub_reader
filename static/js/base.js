@@ -1,3 +1,23 @@
+// Mobile analog localStorage
+if (typeof window.localStorage === 'undefined' || window.localStorage === null) {
+    Object.defineProperty(window, 'localStorage', {
+        value: {
+            getItem: function(key) {
+                let matches = document.cookie.match(new RegExp(
+                    "(?:^|; )" + key.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+                ));
+                return matches ? decodeURIComponent(matches[1]) : null;
+            },
+            setItem: function(key, value) {
+                document.cookie = key + "=" + encodeURIComponent(value) + "; path=/; max-age=31536000"; 
+            },
+            removeItem: function(key) {
+                document.cookie = key + "=; path=/; max-age=-1";
+            }
+        },
+        writable: true
+    });
+}
 document.addEventListener('DOMContentLoaded', () => {
 
     // Back button

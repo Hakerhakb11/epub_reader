@@ -190,8 +190,8 @@ details.aside-menu[open] {
     padding: 10px 20px;
     box-sizing: border-box;
     transition: transform 0.3s ease-in-out;
-    transform: translateY(-100%);
-    animation: showPanelOnLoad 4.5s ease-in-out;
+    /* transform: translateY(-100%);  COMMENTED FOR MOBILE VERSION
+    animation: showPanelOnLoad 4.5s ease-in-out; COMMENTED FOR MOBILE VERSION */ 
     z-index: 1000;
 }
 

@@ -42,7 +42,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,flask,beautifulsoup4,flask-sqlalchemy,sqlalchemy,werkzeug,jinja2,itsdangerous,click,blinker
+requirements = python3, flask, flask-sqlalchemy, sqlalchemy==2.0.36, beautifulsoup4, soupsieve, pywebview, proxy_tools, typing_extensions, bottle
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
 # requirements.source.kivy = ../../kivy

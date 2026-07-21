@@ -38,12 +38,13 @@ def add_epub_file(user_file):
             if rootfile is None:
                 raise KeyError
             opf_path = rootfile.attrib['full-path']
-            
-            base_dir = opf_path.rsplit('/', 1)[0] + '/' if '/' in opf_path else ''
-            
+
+            base_dir = opf_path.rsplit(
+                '/', 1)[0] + '/' if '/' in opf_path else ''
+
             opf_content = z.read(opf_path)
             opf_root = ET.fromstring(opf_content)
-            
+
             title_element = opf_root.find('.//dc:title', NAMESPACES)
             book_title = title_element.text if title_element is not None else "Unknown Title"
 
@@ -51,22 +52,23 @@ def add_epub_file(user_file):
             if not new_book:
                 new_book = Book(title=f'{book_title}')
                 db.session.add(new_book)
-                
+
                 manifest = {}
                 for item in opf_root.findall('.//opf:item', NAMESPACES):
                     manifest[item.attrib['id']] = item.attrib['href']
-                
+
                 spine_elements = opf_root.findall('.//opf:itemref', NAMESPACES)
                 for index, item_spine in enumerate(spine_elements):
                     item_id = item_spine.attrib['idref']
                     href = manifest.get(item_id)
                     if not href:
                         continue
-                    
+
                     file_zip_path = base_dir + href
                     raw_content = z.read(file_zip_path)
-                    
-                    title = href.rsplit('/', 1)[-1].replace('.xhtml', '').replace('.html', '')
+
+                    title = href.rsplit(
+                        '/', 1)[-1].replace('.xhtml', '').replace('.html', '')
 
                     soup = clear_chapters(raw_content)
 
@@ -86,7 +88,7 @@ def add_epub_file(user_file):
                 info = 'This Book already exist'
                 logging.info(info)
                 return info
-                
+
     except (zipfile.BadZipFile, ET.ParseError, KeyError, AttributeError, IndexError):
         info = "Incorrect file type need '.epub'"
         logging.error(info)

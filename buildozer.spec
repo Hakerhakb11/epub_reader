@@ -175,7 +175,7 @@ android.ndk = 25c
 
 # (str) Path to a custom blacklist file
 #android.blacklist_src =
-
+android.add_src
 # (list) List of Java .jar files to add to the libs so that pyjnius can access
 # their classes. Don't add jars that you do not need, since extra jars can slow
 # down the build process. Allows wildcards matching, for example:

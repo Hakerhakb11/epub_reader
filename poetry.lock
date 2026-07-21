@@ -73,7 +73,7 @@ version = "0.13.4"
 description = "Fast and simple WSGI-framework for small web-applications."
 optional = false
 python-versions = "*"
-groups = ["desktop"]
+groups = ["main"]
 files = [
     {file = "bottle-0.13.4-py2.py3-none-any.whl", hash = "sha256:045684fbd2764eac9cdeb824861d1551d113e8b683d8d26e296898d3dd99a12e"},
     {file = "bottle-0.13.4.tar.gz", hash = "sha256:787e78327e12b227938de02248333d788cfe45987edca735f8f88e03472c3f47"},
@@ -85,7 +85,7 @@ version = "1.6.0"
 description = "Turns Python applications into binary packages ready for installation on a number of platforms."
 optional = false
 python-versions = ">=3.8"
-groups = ["dev"]
+groups = ["android"]
 files = [
     {file = "buildozer-1.6.0-py3-none-any.whl", hash = "sha256:adf30b983dfc6881a10f6a1fc13b09056a92e526519db7ebbd3d008a788cbde3"},
     {file = "buildozer-1.6.0.tar.gz", hash = "sha256:ad33ae18c3476ae131743f9b5df124936e64c199722e54a15838c952b9115381"},
@@ -134,7 +134,7 @@ version = "0.29.37"
 description = "The Cython compiler for writing C extensions for the Python language."
 optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
-groups = ["dev"]
+groups = ["android"]
 files = [
     {file = "Cython-0.29.37-cp27-cp27m-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:f2d621fe4cb50007446742134a890500b34e3f50abaf7993baaca02634af7e15"},
     {file = "Cython-0.29.37-cp27-cp27m-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:d94caf90ae9cb56116ca6d54cdcbccd3c4df6b0cb7233922b2233ee7fe81d05b"},
@@ -671,11 +671,12 @@ version = "26.2"
 description = "Core utilities for Python packages"
 optional = false
 python-versions = ">=3.8"
-groups = ["desktop", "dev"]
+groups = ["main", "android", "desktop"]
 files = [
     {file = "packaging-26.2-py3-none-any.whl", hash = "sha256:5fc45236b9446107ff2415ce77c807cee2862cb6fac22b8a73826d0693b0980e"},
     {file = "packaging-26.2.tar.gz", hash = "sha256:ff452ff5a3e828ce110190feff1178bb1f2ea2281fa2075aadb987c2fb221661"},
 ]
+markers = {main = "sys_platform == \"openbsd6\""}
 
 [[package]]
 name = "pefile"
@@ -696,7 +697,7 @@ version = "4.9.0"
 description = "Pexpect allows easy control of interactive console applications."
 optional = false
 python-versions = "*"
-groups = ["dev"]
+groups = ["android"]
 files = [
     {file = "pexpect-4.9.0-py2.py3-none-any.whl", hash = "sha256:7236d1e080e4936be2dc3e326cec0af72acf9212a7e1d060210e70a47e253523"},
     {file = "pexpect-4.9.0.tar.gz", hash = "sha256:ee7d41123f3c9911050ea2c2dac107568dc43b2d3b0c7557a33212c398ead30f"},
@@ -711,7 +712,7 @@ version = "0.1.0"
 description = "Proxy Implementation"
 optional = false
 python-versions = "*"
-groups = ["desktop"]
+groups = ["main"]
 files = [
     {file = "proxy_tools-0.1.0.tar.gz", hash = "sha256:ccb3751f529c047e2d8a58440d86b205303cf0fe8146f784d1cbcd94f0a28010"},
 ]
@@ -722,7 +723,7 @@ version = "0.7.0"
 description = "Run a subprocess in a pseudo terminal"
 optional = false
 python-versions = "*"
-groups = ["dev"]
+groups = ["android"]
 files = [
     {file = "ptyprocess-0.7.0-py2.py3-none-any.whl", hash = "sha256:4b41f3967fce3af57cc7e94b888626c18bf37a083e3651ca8feeb66d492fef35"},
     {file = "ptyprocess-0.7.0.tar.gz", hash = "sha256:5c5d0a3b48ceee0b48485e0c26037c0acd7d29765ca3fbb5cb3831d347423220"},
@@ -734,7 +735,7 @@ version = "3.0"
 description = "C parser in Python"
 optional = false
 python-versions = ">=3.10"
-groups = ["desktop"]
+groups = ["main"]
 markers = "sys_platform == \"win32\""
 files = [
     {file = "pycparser-3.0-py3-none-any.whl", hash = "sha256:b727414169a36b7d524c1c3e31839a521725078d7b2ff038656844266160a992"},
@@ -797,7 +798,7 @@ version = "12.2.1"
 description = "Python<->ObjC Interoperability Module"
 optional = false
 python-versions = ">=3.10"
-groups = ["desktop"]
+groups = ["main"]
 markers = "sys_platform == \"darwin\""
 files = [
     {file = "pyobjc_core-12.2.1-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:aa5c889961d79d7704f17eeb27f80ee791335819c1bb14babeff7b9ea665b5f0"},
@@ -818,7 +819,7 @@ version = "12.2.1"
 description = "Wrappers for the Cocoa frameworks on macOS"
 optional = false
 python-versions = ">=3.10"
-groups = ["desktop"]
+groups = ["main"]
 markers = "sys_platform == \"darwin\""
 files = [
     {file = "pyobjc_framework_cocoa-12.2.1-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:05443c1494532779cccff83e9792fdd6f0a4800cac56620132bf28e0bf966e9d"},
@@ -842,7 +843,7 @@ version = "12.2.1"
 description = "Wrappers for the Quartz frameworks on macOS"
 optional = false
 python-versions = ">=3.10"
-groups = ["desktop"]
+groups = ["main"]
 markers = "sys_platform == \"darwin\""
 files = [
     {file = "pyobjc_framework_quartz-12.2.1-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:c8fed57ac8a1927e4fe4f48ab4042cbc1087d881743182b6f3f2e6e227a9209f"},
@@ -867,7 +868,7 @@ version = "12.2.1"
 description = "Wrappers for the framework Security on macOS"
 optional = false
 python-versions = ">=3.10"
-groups = ["desktop"]
+groups = ["main"]
 markers = "sys_platform == \"darwin\""
 files = [
     {file = "pyobjc_framework_security-12.2.1-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:b490fb0d46275f165b1214785fec732bc7b8e06c99b6ba045382404d44400d9c"},
@@ -892,7 +893,7 @@ version = "12.2.1"
 description = "Wrappers for the framework UniformTypeIdentifiers on macOS"
 optional = false
 python-versions = ">=3.10"
-groups = ["desktop"]
+groups = ["main"]
 markers = "sys_platform == \"darwin\""
 files = [
     {file = "pyobjc_framework_uniformtypeidentifiers-12.2.1-py2.py3-none-any.whl", hash = "sha256:ea08413ad895a7dfea13670e26548bcf5b00154084cdfb5d8f96603320e77cf3"},
@@ -909,7 +910,7 @@ version = "12.2.1"
 description = "Wrappers for the framework WebKit on macOS"
 optional = false
 python-versions = ">=3.10"
-groups = ["desktop"]
+groups = ["main"]
 markers = "sys_platform == \"darwin\""
 files = [
     {file = "pyobjc_framework_webkit-12.2.1-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:ad59030aeb9bb11d28a939760cb64b93108b6a8508c6001cf87789fd7a9312bd"},
@@ -934,7 +935,7 @@ version = "2.5.2"
 description = ".Net and Mono integration for Python"
 optional = false
 python-versions = "*"
-groups = ["desktop"]
+groups = ["main"]
 markers = "sys_platform == \"win32\""
 files = [
     {file = "pythonnet-2.5.2-cp27-cp27m-win32.whl", hash = "sha256:d519bbc7b1cd3999651efc594d91cb67c46d1d8466dad3d83b578102e58d05bd"},
@@ -959,7 +960,7 @@ version = "6.2.1"
 description = "Build GUI for your Python program with JavaScript, HTML, and CSS"
 optional = false
 python-versions = ">=3.8"
-groups = ["desktop"]
+groups = ["main"]
 files = [
     {file = "pywebview-6.2.1-py3-none-any.whl", hash = "sha256:9d07275f53894ab4d5e2e0e996227193e7187dec276d9b624dccbce029216b46"},
     {file = "pywebview-6.2.1.tar.gz", hash = "sha256:71b7136752e40824655304d938efb62014218d1a90bd8e87e1cbdb1ce9c466af"},
@@ -1009,7 +1010,7 @@ version = "2.4.3"
 description = "Provides an abstraction layer on top of the various Qt bindings (PyQt5/6 and PySide2/6)."
 optional = false
 python-versions = ">=3.7"
-groups = ["desktop"]
+groups = ["main"]
 markers = "sys_platform == \"openbsd6\""
 files = [
     {file = "QtPy-2.4.3-py3-none-any.whl", hash = "sha256:72095afe13673e017946cc258b8d5da43314197b741ed2890e563cf384b51aa1"},
@@ -1195,7 +1196,7 @@ version = "4.15.0"
 description = "Backported and Experimental Type Hints for Python 3.9+"
 optional = false
 python-versions = ">=3.9"
-groups = ["main", "desktop"]
+groups = ["main"]
 files = [
     {file = "typing_extensions-4.15.0-py3-none-any.whl", hash = "sha256:f0fa19c6845758ab08074a0cfa8b7aecb71c999ca73d62883bc25cc018c4e548"},
     {file = "typing_extensions-4.15.0.tar.gz", hash = "sha256:0cea48d173cc12fa28ecabc3b837ea3cf6f38c6d1136f85cbaaf598984861466"},
@@ -1222,4 +1223,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<3.16"
-content-hash = "25f913562ef0458c492181ead98c8798029f8b8b4377750b30ab0585f36c5059"
+content-hash = "9dcae9e788ff900862ecc29ff8b03a6c19985320b07a69514e14ee2ade4a52b3"

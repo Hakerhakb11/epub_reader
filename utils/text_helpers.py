@@ -1,17 +1,23 @@
 import logging
-
+import zipfile
+import xml.etree.ElementTree as ET
 from bs4 import BeautifulSoup
-from ebooklib import epub
 
 from models import Book, Chapter, db
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
+NAMESPACES = {
+    'container': 'urn:oasis:names:tc:opendocument:xmlns:container',
+    'opf': 'http://www.idpf.org/2007/opf',
+    'dc': 'http://purl.org/dc/elements/1.1/'
+}
+
 
 def words_count(user_text):
     if user_text:
-        soup = BeautifulSoup(user_text, 'lxml')
+        soup = BeautifulSoup(user_text, 'html.parser')
         if soup.head:
             soup.head.decompose()
 
@@ -25,63 +31,76 @@ def words_count(user_text):
 
 def add_epub_file(user_file):
     try:
-        efile = epub.read_epub(user_file)
+        with zipfile.ZipFile(user_file, 'r') as z:
+            container_xml = z.read('META-INF/container.xml')
+            c_root = ET.fromstring(container_xml)
+            rootfile = c_root.find('.//container:rootfile', NAMESPACES)
+            if rootfile is None:
+                raise KeyError
+            opf_path = rootfile.attrib['full-path']
 
-        new_book = Book.query.filter_by(title=efile.title).first()
-        if not new_book:
-            new_book = Book(title=f'{efile.title}')
-            db.session.add(new_book)
-            spine = efile.spine
-            for index, item_spine in enumerate(spine):
-                item_id = item_spine[0]
-                file = efile.get_item_with_id(item_id)
-                title = file.get_name().rsplit(
-                    '/', 1)[-1].replace('.xhtml', '')
+            base_dir = opf_path.rsplit(
+                '/', 1)[0] + '/' if '/' in opf_path else ''
 
-                soup = clear_chapters(file)
+            opf_content = z.read(opf_path)
+            opf_root = ET.fromstring(opf_content)
 
-                chapter = Chapter(
-                    title=title,
-                    content=str(soup),
-                    order_number=index,
-                    book=new_book,
-                )
-                db.session.add(chapter)
+            title_element = opf_root.find('.//dc:title', NAMESPACES)
+            book_title = title_element.text if title_element is not None else "Unknown Title"
 
-            info = f'Succesfully imported file: {efile.title}'
-            logging.info(info)
-            db.session.commit()
-            return info
-        else:
-            info = 'This Book already exist'
-            logging.info(info)
-            return info
-    except epub.EpubException:
+            new_book = Book.query.filter_by(title=book_title).first()
+            if not new_book:
+                new_book = Book(title=f'{book_title}')
+                db.session.add(new_book)
+
+                manifest = {}
+                for item in opf_root.findall('.//opf:item', NAMESPACES):
+                    manifest[item.attrib['id']] = item.attrib['href']
+
+                spine_elements = opf_root.findall('.//opf:itemref', NAMESPACES)
+                for index, item_spine in enumerate(spine_elements):
+                    item_id = item_spine.attrib['idref']
+                    href = manifest.get(item_id)
+                    if not href:
+                        continue
+
+                    file_zip_path = base_dir + href
+                    raw_content = z.read(file_zip_path)
+
+                    title = href.rsplit(
+                        '/', 1)[-1].replace('.xhtml', '').replace('.html', '')
+
+                    soup = clear_chapters(raw_content)
+
+                    chapter = Chapter(
+                        title=title,
+                        content=str(soup),
+                        order_number=index,
+                        book=new_book,
+                    )
+                    db.session.add(chapter)
+
+                info = f'Succesfully imported file: {book_title}'
+                logging.info(info)
+                db.session.commit()
+                return info
+            else:
+                info = 'This Book already exist'
+                logging.info(info)
+                return info
+
+    except (zipfile.BadZipFile, ET.ParseError, KeyError, AttributeError, IndexError):
         info = "Incorrect file type need '.epub'"
         logging.error(info)
         return info
-    except KeyError:
-        info = "Incorrect file type need '.epub'"
-        logging.error(info)
-        return info
 
 
-def clear_chapters(file):
-    raw_content = file.get_content()
-    soup = BeautifulSoup(raw_content, 'xml')
+def clear_chapters(raw_content):
+    soup = BeautifulSoup(raw_content, 'html.parser')
 
     tags_to_clean = [
-        'p',
-        'h1',
-        'h2',
-        'h3',
-        'h4',
-        'span',
-        'div',
-        'ol',
-        'ul',
-        'li',
-        'section',
+        'p', 'h1', 'h2', 'h3', 'h4', 'span',
+        'div', 'ol', 'ul', 'li', 'section',
     ]
 
     for tag in soup.find_all(tags_to_clean):

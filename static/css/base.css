@@ -263,6 +263,20 @@ summary:hover {
     color: var(--body-background-color);
 }
 
+.output img,
+.output svg {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.output svg image {
+    width: 100%;
+    height: 100%;
+}
+
 summary svg {
     fill: var(--body-color);
 }
